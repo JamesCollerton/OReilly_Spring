@@ -16,9 +16,10 @@ import javax.sql.DataSource;
 public class AppConfig {
 
     /**
-     * This treats all beans as
+     * Note, when this has an argument it is still being pulled
+     * from the infrastructure config. It looks like it is just
+     * taking an argument, but it is using the datasource bean.
      */
-
     @Bean
     public Game game(DataSource dataSource) {
         BaseballGame baseballGame = new BaseballGame(redSox(), cubs());
