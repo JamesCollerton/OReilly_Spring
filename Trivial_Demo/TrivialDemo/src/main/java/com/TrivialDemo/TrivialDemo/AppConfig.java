@@ -1,16 +1,12 @@
 package com.TrivialDemo.TrivialDemo;
 
 import com.TrivialDemo.TrivialDemo.entities.classes.BaseballGame;
-import com.TrivialDemo.TrivialDemo.entities.classes.Cubs;
-import com.TrivialDemo.TrivialDemo.entities.classes.RedSox;
 import com.TrivialDemo.TrivialDemo.entities.interfaces.Game;
 import com.TrivialDemo.TrivialDemo.entities.interfaces.Team;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -28,17 +24,18 @@ public class AppConfig {
     private DataSource dataSource;
 
     /**
-     * Note, in general you should put beans you want to scan into the same folder
+     * Note, in general you should put beans you want to scan into the same folder.
+     * Resource loads it by name
      */
-    @Autowired @Qualifier("redSox")
-    private Team home;
+    @Resource
+    private Team redSox;
 
-    @Autowired @Qualifier("cubs")
-    private Team away;
+    @Resource
+    private Team cubs;
 
     @Bean
     public Game game() {
-        BaseballGame baseballGame = new BaseballGame(home, away);
+        BaseballGame baseballGame = new BaseballGame(redSox, cubs);
         baseballGame.setDataSource(dataSource);
         return baseballGame;
     }
