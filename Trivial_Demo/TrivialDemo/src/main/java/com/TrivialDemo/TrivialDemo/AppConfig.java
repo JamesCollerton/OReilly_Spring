@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 @Configuration
@@ -20,11 +21,15 @@ public class AppConfig {
 
     /**
      * This goes to find the bean in whichever config file this exists in. Note,
-     * this only works if there is one data source
+     * this only works if there is one data source. Note, Autowired is autowired
+     * by type.
      */
     @Autowired
     private DataSource dataSource;
 
+    /**
+     * Note, in general you should put beans you want to scan into the same folder
+     */
     @Autowired @Qualifier("redSox")
     private Team home;
 
