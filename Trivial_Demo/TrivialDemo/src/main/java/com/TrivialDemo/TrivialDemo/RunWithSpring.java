@@ -19,7 +19,7 @@ public class RunWithSpring {
 
         Game game2 = context.getBean("game", Game.class);
         Cubs cubs = context.getBean("cubs", Cubs.class);
-        game1.setAwayTeam(cubs);
+        game2.setAwayTeam(cubs);
 //        System.out.println(game.playGame());
         System.out.println(game2.toString());
 

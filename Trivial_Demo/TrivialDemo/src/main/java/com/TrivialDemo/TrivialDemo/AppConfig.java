@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -41,7 +42,11 @@ public class AppConfig {
     @Autowired
     private List<Team> teams;
 
-    @Bean
+    /**
+     * This prototype annotation means we get a new instance every time we call for
+     * this bean.
+     */
+    @Bean @Scope("prototype")
     public Game game() {
         BaseballGame baseballGame = new BaseballGame(home, away);
         baseballGame.setDataSource(dataSource);
