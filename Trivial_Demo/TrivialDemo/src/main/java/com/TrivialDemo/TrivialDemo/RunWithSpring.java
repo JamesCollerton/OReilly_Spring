@@ -13,8 +13,8 @@ public class RunWithSpring {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
         Game game = context.getBean("game", Game.class);
-        Team royals = context.getBean("redSox", RedSox.class);
-        Team cubs = context.getBean("cubs", Cubs.class);
+        RedSox royals = context.getBean("redSox", RedSox.class);
+        Cubs cubs = context.getBean("cubs", Cubs.class);
 
         game.setHomeTeam(royals);
         game.setAwayTeam(cubs);

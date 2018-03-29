@@ -20,7 +20,7 @@ public class AppConfig {
      * this only works if there is one data source. Note, Autowired is autowired
      * by type.
      */
-    @Autowired
+    @Autowired @Qualifier("dataSource")
     private DataSource dataSource;
 
     /**
