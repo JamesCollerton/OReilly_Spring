@@ -5,16 +5,14 @@ import com.TrivialDemo.TrivialDemo.entities.interfaces.Game;
 import com.TrivialDemo.TrivialDemo.entities.interfaces.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Configuration
 @ComponentScan(basePackages = "com.TrivialDemo")
+@EnableAspectJAutoProxy
 public class AppConfig {
 
     /**
@@ -46,9 +44,8 @@ public class AppConfig {
      * This prototype annotation means we get a new instance every time we call for
      * this bean.
      */
-//    @Bean(initMethod = "startGame", destroyMethod = "endGame")
     @Bean
-//    @Scope("prototype")
+    @Scope("prototype")
     public Game game() {
         BaseballGame baseballGame = new BaseballGame(home, away);
         baseballGame.setDataSource(dataSource);
