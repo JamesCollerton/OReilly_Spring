@@ -16,6 +16,14 @@ public class BaseballGame implements Game {
         setAwayTeam(awayTeam);
     }
 
+    public void startGame() {
+        System.out.println("Playing National Anthem");
+    }
+
+    public void endGame() {
+        System.out.println("Sending highlights to network");
+    }
+
     @Override
     public void setHomeTeam(Team team) {
         this.homeTeam = team;
