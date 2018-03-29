@@ -9,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class RunWithSpring {
 
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
         /**
          * Note, this doesn't necessarily call the end game method, as this is only
@@ -18,6 +18,7 @@ public class RunWithSpring {
         Game game = context.getBean("game", Game.class);
         System.out.println(game.playGame());
 
+        context.close();
     }
 
 }

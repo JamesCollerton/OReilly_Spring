@@ -46,8 +46,9 @@ public class AppConfig {
      * This prototype annotation means we get a new instance every time we call for
      * this bean.
      */
-    @Bean(initMethod = "startGame", destroyMethod = "endGame")
-    @Scope("prototype")
+//    @Bean(initMethod = "startGame", destroyMethod = "endGame")
+    @Bean
+//    @Scope("prototype")
     public Game game() {
         BaseballGame baseballGame = new BaseballGame(home, away);
         baseballGame.setDataSource(dataSource);

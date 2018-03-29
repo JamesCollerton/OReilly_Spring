@@ -3,6 +3,8 @@ package com.TrivialDemo.TrivialDemo.entities.classes;
 import com.TrivialDemo.TrivialDemo.entities.interfaces.Game;
 import com.TrivialDemo.TrivialDemo.entities.interfaces.Team;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 
 public class BaseballGame implements Game {
@@ -16,10 +18,12 @@ public class BaseballGame implements Game {
         setAwayTeam(awayTeam);
     }
 
+    @PostConstruct
     public void startGame() {
         System.out.println("Playing National Anthem");
     }
 
+    @PreDestroy
     public void endGame() {
         System.out.println("Sending highlights to network");
     }
