@@ -28,23 +28,23 @@ public class LoggingAspect {
         logger.info("Called " + method + " with args " + arg + " on " + joinPoint.getTarget());
     }
 
-//    @Around("execution(* com.TrivialDemo..*(..))")
-//    public Object callMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-//
-//        // Get information
-//        String method = proceedingJoinPoint.getSignature().getName();
-//        String arg = Arrays.stream(proceedingJoinPoint.getArgs()).map(Object::toString).collect(Collectors.joining(", "));
-//        String target = proceedingJoinPoint.getTarget().toString();
-//
-//        // Log on the way in
-//        logger.info("Calling " + method + " with args " + arg + " on " + target);
-//
-//        Object retVal = proceedingJoinPoint.proceed();
-//
-//        // Log on the way out
-//        logger.info("Called " + method + " with args " + arg + " on " + target);
-//
-//        return retVal;
-//    }
+    @Around("execution(* com.TrivialDemo..*.*(..))")
+    public Object callMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+
+        // Get information
+        String method = proceedingJoinPoint.getSignature().getName();
+        String arg = Arrays.stream(proceedingJoinPoint.getArgs()).map(Object::toString).collect(Collectors.joining(", "));
+        String target = proceedingJoinPoint.getTarget().toString();
+
+        // Log on the way in
+        logger.info("Calling " + method + " with args " + arg + " on " + target);
+
+        Object retVal = proceedingJoinPoint.proceed();
+
+        // Log on the way out
+        logger.info("Called " + method + " with args " + arg + " on " + target);
+
+        return retVal;
+    }
 
 }
