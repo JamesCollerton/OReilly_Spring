@@ -1,7 +1,12 @@
 package com.MeterReads.MeterReads.DataObjects;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * {
@@ -18,18 +23,10 @@ import java.util.List;
 public class MeterReading {
 
     private String customerId;
-//    private int serialNumber;
-//    private int mpxn;
-//    private List<Reads> reads;
-//    private Date readDate;
-
-//    public MeterReading() {
-//        this.customerId = customerId;
-//        this.serialNumber = serialNumber;
-//        this.mpxn = mpxn;
-//        this.reads = reads;
-//        this.readDate = readDate;
-//    }
+    private long serialNumber;
+    private long mpxn;
+    private List<Reads> reads;
+    private String readDate;
 
     public String getCustomerId() {
         return customerId;
@@ -39,36 +36,41 @@ public class MeterReading {
         this.customerId = customerId;
     }
 
-//    public int getSerialNumber() {
-//        return serialNumber;
-//    }
-//
-//    public void setSerialNumber(int serialNumber) {
-//        this.serialNumber = serialNumber;
-//    }
-//
-//    public int getMpxn() {
-//        return mpxn;
-//    }
-//
-//    public void setMpxn(int mpxn) {
-//        this.mpxn = mpxn;
-//    }
-//
-//    public List<Reads> getReads() {
-//        return reads;
-//    }
-//
-//    public void setReads(List<Reads> reads) {
-//        this.reads = reads;
-//    }
-//
-//    public Date getReadDate() {
-//        return readDate;
-//    }
-//
-//    public void setReadDate(Date readDate) {
-//        this.readDate = readDate;
-//    }
+    public long getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(long serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public long getMpxn() {
+        return mpxn;
+    }
+
+    public void setMpxn(long mpxn) {
+        this.mpxn = mpxn;
+    }
+
+    public List<Reads> getReads() {
+        return reads;
+    }
+
+    public void setReads(List<Reads> reads) {
+        this.reads = reads;
+    }
+
+    public String getReadDate() {
+        return readDate;
+    }
+
+    public void setReadDate(String readDate) throws ParseException {
+        this.readDate = readDate;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        format.parse(readDate);
+        Instant.parse(readDate);
+        ZonedDateTime.parse(readDate, DateTimeFormatter.ISO_DATE_TIME);
+    }
 
 }

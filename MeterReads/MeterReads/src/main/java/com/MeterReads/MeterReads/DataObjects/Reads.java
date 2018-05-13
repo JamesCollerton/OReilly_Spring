@@ -3,14 +3,8 @@ package com.MeterReads.MeterReads.DataObjects;
 public class Reads {
 
     private String type;
-    private int registerId;
-    private int value;
-
-    public Reads(String type, int registerId, int value) {
-        this.type = type;
-        this.registerId = registerId;
-        this.value = value;
-    }
+    private long registerId;
+    private long value;
 
     public String getType() {
         return type;
@@ -20,19 +14,19 @@ public class Reads {
         this.type = type;
     }
 
-    public int getRegisterId() {
+    public long getRegisterId() {
         return registerId;
     }
 
-    public void setRegisterId(int registerId) {
+    public void setRegisterId(long registerId) {
         this.registerId = registerId;
     }
 
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.value = value;
     }
 }
