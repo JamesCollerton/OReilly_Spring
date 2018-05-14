@@ -1,12 +1,9 @@
 package com.MeterReads.MeterReads.DataObjects;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import com.MeterReads.MeterReads.Utils.DateTimeUtils;
+
+import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * {
@@ -26,7 +23,7 @@ public class MeterReading {
     private long serialNumber;
     private long mpxn;
     private List<Reads> reads;
-    private String readDate;
+    private OffsetDateTime readDate;
 
     public String getCustomerId() {
         return customerId;
@@ -60,17 +57,12 @@ public class MeterReading {
         this.reads = reads;
     }
 
-    public String getReadDate() {
+    public OffsetDateTime getReadDate() {
         return readDate;
     }
 
-    public void setReadDate(String readDate) throws ParseException {
-        this.readDate = readDate;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-        format.setTimeZone(TimeZone.getTimeZone("UTC"));
-        format.parse(readDate);
-        Instant.parse(readDate);
-        ZonedDateTime.parse(readDate, DateTimeFormatter.ISO_DATE_TIME);
+    public void setReadDate(String readDate) {
+        this.readDate = DateTimeUtils.parseISO8601Date(readDate);
     }
 
 }

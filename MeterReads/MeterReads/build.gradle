@@ -27,6 +27,7 @@ bootJar {
 
 repositories {
 	mavenCentral()
+    jcenter()
 }
 
 sourceCompatibility = 1.8
@@ -34,5 +35,6 @@ targetCompatibility = 1.8
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("io.springfox:springfox-swagger2:2.9.0")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
