@@ -1,4 +1,4 @@
-package com.MeterReads.MeterReads.DataObjects;
+package com.MeterReads.MeterReads.DataObjects.Entities;
 
 import com.MeterReads.MeterReads.Utils.DateTimeUtils;
 

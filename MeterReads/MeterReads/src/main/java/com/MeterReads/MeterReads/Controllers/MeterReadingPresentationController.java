@@ -1,6 +1,6 @@
 package com.MeterReads.MeterReads.Controllers;
 
-import com.MeterReads.MeterReads.DataObjects.MeterReadingPresentation;
+import com.MeterReads.MeterReads.DataObjects.Responses.MeterReadingPresentation;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

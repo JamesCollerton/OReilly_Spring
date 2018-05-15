@@ -1,4 +1,4 @@
-package com.MeterReads.MeterReads.DataObjects;
+package com.MeterReads.MeterReads.DataObjects.Responses;
 
 /**
  * This is used to handle any requests for data from the API. When

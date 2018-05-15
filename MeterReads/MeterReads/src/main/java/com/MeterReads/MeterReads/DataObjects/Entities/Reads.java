@@ -1,4 +1,4 @@
-package com.MeterReads.MeterReads.DataObjects;
+package com.MeterReads.MeterReads.DataObjects.Entities;
 
 /**
  * This is the nested Reads object in the schema and is

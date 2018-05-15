@@ -1,4 +1,6 @@
-package com.MeterReads.MeterReads.DataObjects;
+package com.MeterReads.MeterReads.DataObjects.Responses;
+
+import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 
 /**
  * This class is used to ingest a meter reading and then return a
