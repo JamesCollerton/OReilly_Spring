@@ -76,6 +76,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 public class MeterReadsApplication {
 
+    /**
+     * This is the configuration for Swagger2 so we can use it to
+     * document the API.
+     *
+     * @return A new docket for the configuration
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)

@@ -1,5 +1,9 @@
 package com.MeterReads.MeterReads.DataObjects;
 
+/**
+ * This is the nested Reads object in the schema and is
+ * contained in the larger MeterReading class.
+ */
 public class Reads {
 
     private String type;

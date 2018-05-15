@@ -2,6 +2,7 @@ package com.MeterReads.MeterReads.Controllers;
 
 import com.MeterReads.MeterReads.DataObjects.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.MeterReadingAcceptance;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,12 @@ public class MeterReadingAcceptanceController {
      *
      * @return A MeterReadingAcceptance object indicating if ingestion was successful
      */
+    @ApiOperation(
+            httpMethod = "POST",
+            value = "Post new meter reading to API",
+            notes = "New meter reading must be a valid JSON in body of request",
+            response = MeterReadingAcceptance.class
+    )
     @RequestMapping(value = "/meter-read", method = POST)
     public MeterReadingAcceptance meterRead(@RequestBody MeterReading meterReading) {
         return new MeterReadingAcceptance(meterReading);
