@@ -13,7 +13,13 @@ public class Logging {
 
         private Logger logger = Logger.getLogger(getClass().getName());
 
-        @Before("execution(* com.MeterReads.MeterReads..*.*(..))")
+        /*
+        Logger ideas:
+            - Logging around the calls to controllers with time elapsed.
+            - Logging around the writing to the database with time elapsed.
+         */
+
+        @Before("execution(* com.MeterReads.MeterReads.Controllers..*.*(..))")
         public void logForAllMethods(JoinPoint joinPoint){
             logger.info("Entering in Method :  " + joinPoint.getSignature().getName());
         }
