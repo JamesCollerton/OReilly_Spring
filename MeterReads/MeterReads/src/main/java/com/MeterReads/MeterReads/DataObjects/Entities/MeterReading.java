@@ -1,6 +1,6 @@
 package com.MeterReads.MeterReads.DataObjects.Entities;
 
-import com.MeterReads.MeterReads.Utils.DateTimeUtils;
+import com.MeterReads.MeterReads.Utils.DateTime.DateTimeUtils;
 
 import java.time.OffsetDateTime;
 import java.util.List;

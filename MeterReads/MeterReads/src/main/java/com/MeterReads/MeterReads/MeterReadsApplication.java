@@ -72,6 +72,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * MPXN this is the meter point number: MPAN for Electric, MPRN for Gas. This can be used to uniquely identify a
  * supply point.
  *
+ * TODO: Finish logging
+ * TODO: Change which objects are returned
+ * TODO: Finish testing
+ * TODO: Finish writing to DB
+ * TODO: Write all comments and generate documentation
  */
 
 @Configuration
