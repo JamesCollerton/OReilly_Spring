@@ -1,11 +1,10 @@
 package com.MeterReads.MeterReads.Utils.Logging;
 
+import com.MeterReads.MeterReads.DataObjects.FunctionalInterfaces.ThrowableFunction;
 import com.MeterReads.MeterReads.Utils.Timing.MillisTimer;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.DeclarePrecedence;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -24,21 +23,18 @@ public class Logging {
         - Logging around the writing to the database with time elapsed.
      */
 
-    
+    /**
+     * This provides the logging for any method in the program.
+     *
+     * @param joinPoint The join point for the method we are intercepting
+     *
+     * @return The return value for whatever method we are intercepting
+     *
+     * @throws Throwable
+     */
     @Around("execution(* com.MeterReads.MeterReads..*.*(..))")
     public Object allMethodLogging(ProceedingJoinPoint joinPoint) throws Throwable {
-        String methodName = joinPoint.getSignature().getName();
-        Object[] methodArguments = joinPoint.getArgs();
-
-        logger.info("Entering in Method: " + methodName);
-        logger.info("Method Arguments: " + Arrays.stream(methodArguments).map(Object::toString).collect(Collectors.joining(", ")));
-
-        Object returnValue = joinPoint.proceed(methodArguments);
-
-        logger.info("Exiting Method: " + methodName);
-        logger.info("Method Return Value: " + returnValue.toString());
-
-        return returnValue;
+        return loggingExecutor("Generic Method", this::genericMethodLogging, joinPoint);
     }
 
     /**
@@ -53,15 +49,56 @@ public class Logging {
      */
     @Around("execution(* com.MeterReads.MeterReads.Controllers..*.*(..))")
     public Object controllerLogging(ProceedingJoinPoint joinPoint) throws Throwable {
-        logger.info("Entering in Controller Logging");
-        Object returnValue = performanceMonitoringLogging(joinPoint);
-        logger.info("Exiting Controller Logging");
-        return returnValue;
+        return loggingExecutor("Controller", this::performanceMonitoringLogging, joinPoint);
     }
 
     /*
     Utilities
      */
+
+    /**
+     * This is a logging executor which acts as a wrapper for executing the various loggers
+     * defined for different join points.
+     *
+     * @param loggingName The name we want displayed next to whichever logger we are executing
+     * @param loggerFunction The logging function we want to execute
+     * @param joinPoint The join point for the method we are intercepting
+     *
+     * @return The return value for whatever method we are intercepting
+     * 
+     * @throws Throwable
+     */
+    private Object loggingExecutor(String loggingName, ThrowableFunction<ProceedingJoinPoint, Object> loggerFunction, ProceedingJoinPoint joinPoint) throws Throwable {
+        logger.info("Entering in " + loggingName + " Logging");
+        Object returnValue = loggerFunction.apply(joinPoint);
+        logger.info("Exiting " + loggingName + " Logging");
+        return returnValue;
+    }
+
+    /**
+     * This is used to log all calls to any methods. It will log the method name, arguments
+     * and tell you when you have entered and exited the method, as well as what was returned.
+     *
+     * @param joinPoint The join point for the method we are intercepting
+     *
+     * @return The return value for whatever method we are intercepting
+     *
+     * @throws Throwable
+     */
+    private Object genericMethodLogging(ProceedingJoinPoint joinPoint) throws Throwable {
+        String methodName = joinPoint.getSignature().getName();
+        Object[] methodArguments = joinPoint.getArgs();
+
+        logger.info("Entering in Method: " + methodName);
+        logger.info("Method Arguments: " + Arrays.stream(methodArguments).map(Object::toString).collect(Collectors.joining(", ")));
+
+        Object returnValue = joinPoint.proceed(methodArguments);
+
+        logger.info("Exiting Method: " + methodName);
+        logger.info("Method Return Value: " + returnValue.toString());
+
+        return returnValue;
+    }
 
     /**
      * This logger can be called whenever we want to monitor the performance of a process.
@@ -79,20 +116,11 @@ public class Logging {
         MillisTimer millisTimer = new MillisTimer();
         millisTimer.start();
 
-//        String methodName = joinPoint.getSignature().getName();
-        Object[] methodArguments = joinPoint.getArgs();
-//
-//        logger.info("Entering in Method: " + methodName);
-//        logger.info("Method Arguments: " + Arrays.stream(methodArguments).map(Object::toString).collect(Collectors.joining(", ")));
-
-        Object returnValue = joinPoint.proceed(methodArguments);
+        Object returnValue = joinPoint.proceed(joinPoint.getArgs());
 
         millisTimer.finish();
-        long timeElapsed = millisTimer.getTime();
 
-//        logger.info("Exiting Method: " + methodName);
-//        logger.info("Method Return Value: " + returnValue.toString());
-        logger.info("Elapsed Time (ms): " + timeElapsed);
+        logger.info("Elapsed Time (ms): " + millisTimer.getTime());
 
         return returnValue;
     }
