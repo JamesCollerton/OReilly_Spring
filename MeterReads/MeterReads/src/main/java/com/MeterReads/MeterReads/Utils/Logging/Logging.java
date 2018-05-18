@@ -17,12 +17,6 @@ public class Logging {
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    /*
-    Logger ideas:
-        - Logging around the calls to controllers with time elapsed.
-        - Logging around the writing to the database with time elapsed.
-     */
-
     /**
      * This provides the logging for any method in the program.
      *

@@ -2,7 +2,9 @@ package com.MeterReads.MeterReads.Controllers;
 
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Responses.MeterReadingAcceptance;
+import com.MeterReads.MeterReads.Services.DAO.MeterReadingDAO;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @RestController
 public class MeterReadingAcceptanceController {
+
+    @Autowired
+    private MeterReadingDAO meterReadingDAO;
 
     /**
      * This method contains the mapping for the POST to meter-read. It parses the request body as a JSON of the
@@ -36,7 +41,7 @@ public class MeterReadingAcceptanceController {
     )
     @RequestMapping(value = "/meter-read", method = POST)
     public ResponseEntity<MeterReading> meterRead(@RequestBody MeterReading meterReading) {
-        new MeterReadingAcceptance(meterReading);
+        meterReadingDAO.insert(meterReading);
         return new ResponseEntity<MeterReading>(meterReading, HttpStatus.CREATED);
     }
 
