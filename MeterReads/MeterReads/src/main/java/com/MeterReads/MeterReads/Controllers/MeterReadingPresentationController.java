@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
@@ -33,9 +37,10 @@ public class MeterReadingPresentationController {
             response = MeterReadingPresentation.class
     )
     @RequestMapping(value = "/meter-read", method = GET)
-    public ResponseEntity<MeterReading> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "mpxn") String mpxn) {
+    public ResponseEntity<List<MeterReading>> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "mpxn") String mpxn) {
         new MeterReadingPresentation(customerId, mpxn);
-        return new ResponseEntity<MeterReading>(new MeterReading(), HttpStatus.OK);
+        List<MeterReading> list = Collections.singletonList(new MeterReading());
+        return new ResponseEntity<List<MeterReading>>(list, HttpStatus.OK);
     }
 
 }
