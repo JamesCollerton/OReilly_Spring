@@ -1,10 +1,10 @@
 package com.MeterReads.MeterReads.DataObjects.Entities;
 
 /**
- * This is the nested Reads object in the schema and is
+ * This is the nested Read object in the schema and is
  * contained in the larger MeterReading class.
  */
-public class Reads {
+public class Read {
 
     private String type;
     private long registerId;

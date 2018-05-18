@@ -1,7 +1,10 @@
 package com.MeterReads.MeterReads.Controllers;
 
+import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Responses.MeterReadingPresentation;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,8 +33,9 @@ public class MeterReadingPresentationController {
             response = MeterReadingPresentation.class
     )
     @RequestMapping(value = "/meter-read", method = GET)
-    public MeterReadingPresentation meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "mpxn") String mpxn) {
-        return new MeterReadingPresentation(customerId, mpxn);
+    public ResponseEntity<MeterReading> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "mpxn") String mpxn) {
+        new MeterReadingPresentation(customerId, mpxn);
+        return new ResponseEntity<MeterReading>(new MeterReading(), HttpStatus.OK);
     }
 
 }

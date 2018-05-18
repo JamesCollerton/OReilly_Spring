@@ -65,7 +65,7 @@ public class Logging {
      * @param joinPoint The join point for the method we are intercepting
      *
      * @return The return value for whatever method we are intercepting
-     * 
+     *
      * @throws Throwable
      */
     private Object loggingExecutor(String loggingName, ThrowableFunction<ProceedingJoinPoint, Object> loggerFunction, ProceedingJoinPoint joinPoint) throws Throwable {

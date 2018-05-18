@@ -1,9 +1,10 @@
 package com.MeterReads.MeterReads.Controllers;
 
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
-import com.MeterReads.MeterReads.DataObjects.Entities.Reads;
 import com.MeterReads.MeterReads.DataObjects.Responses.MeterReadingAcceptance;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,10 +35,9 @@ public class MeterReadingAcceptanceController {
             response = MeterReadingAcceptance.class
     )
     @RequestMapping(value = "/meter-read", method = POST)
-    public MeterReadingAcceptance meterRead(@RequestBody MeterReading meterReading) {
-        Reads reads = new Reads();
-        reads.setRegisterId(1);
-        return new MeterReadingAcceptance(meterReading);
+    public ResponseEntity<MeterReading> meterRead(@RequestBody MeterReading meterReading) {
+        new MeterReadingAcceptance(meterReading);
+        return new ResponseEntity<MeterReading>(meterReading, HttpStatus.CREATED);
     }
 
 }

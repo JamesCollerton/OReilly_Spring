@@ -1,10 +1,8 @@
 package com.MeterReads.MeterReads;
 
-import com.MeterReads.MeterReads.DataObjects.Entities.Reads;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import springfox.documentation.builders.PathSelectors;
@@ -15,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  *
- * Create a service to accept Meter Reads
+ * Create a service to accept Meter Read
  * ======================================
  *
  * Thank-you for showing interest in working with us!

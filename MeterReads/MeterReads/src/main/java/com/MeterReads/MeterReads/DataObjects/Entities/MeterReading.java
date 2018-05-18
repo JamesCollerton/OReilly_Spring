@@ -25,7 +25,7 @@ public class MeterReading {
     private String customerId;
     private long serialNumber;
     private long mpxn;
-    private List<Reads> reads;
+    private List<Read> read;
     private OffsetDateTime readDate;
 
     public String getCustomerId() {
@@ -52,12 +52,12 @@ public class MeterReading {
         this.mpxn = mpxn;
     }
 
-    public List<Reads> getReads() {
-        return reads;
+    public List<Read> getRead() {
+        return read;
     }
 
-    public void setReads(List<Reads> reads) {
-        this.reads = reads;
+    public void setRead(List<Read> read) {
+        this.read = read;
     }
 
     public OffsetDateTime getReadDate() {
