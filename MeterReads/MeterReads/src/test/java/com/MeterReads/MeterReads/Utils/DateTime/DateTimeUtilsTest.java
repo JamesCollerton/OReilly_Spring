@@ -1,6 +1,5 @@
-package com.MeterReads.MeterReads.Utils;
+package com.MeterReads.MeterReads.Utils.DateTime;
 
-import com.MeterReads.MeterReads.Utils.DateTime.DateTimeUtils;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

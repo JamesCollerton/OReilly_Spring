@@ -30,7 +30,7 @@ public class MeterReadingPresentationController {
      * This is the method for handling GET requests to the /meter-read URI.
      *
      * @param customerId The customerId given as part of the URI request
-     * @param mpxn The mpxn number given as part of the URI request
+     * @param serialNumber The serialNumber number given as part of the URI request
      *
      * @return A new MeterReadingPresentation object containing the required reading.
      */
@@ -41,8 +41,8 @@ public class MeterReadingPresentationController {
             response = ResponseEntity.class
     )
     @RequestMapping(value = "/meter-read", method = GET)
-    public ResponseEntity<List<MeterReading>> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "mpxn") String mpxn) {
-        List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndMpxn(customerId, StringParser.parseLong(mpxn));
+    public ResponseEntity<List<MeterReading>> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "serialNumber") String serialNumber) {
+        List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, StringParser.parseLong(serialNumber));
         return new ResponseEntity<List<MeterReading>>(meterReadings, HttpStatus.OK);
     }
 
