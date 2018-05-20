@@ -1,7 +1,10 @@
 package com.MeterReads.MeterReads.Controllers;
 
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
+import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
+import com.MeterReads.MeterReads.Utils.Parsing.StringParser;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class MeterReadingPresentationController {
 
+    @Autowired
+    MeterReadingRepository meterReadingRepository;
+
     /**
      * This is the method for handling GET requests to the /meter-read URI.
      *
@@ -36,8 +42,8 @@ public class MeterReadingPresentationController {
     )
     @RequestMapping(value = "/meter-read", method = GET)
     public ResponseEntity<List<MeterReading>> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "mpxn") String mpxn) {
-        List<MeterReading> list = Collections.singletonList(new MeterReading());
-        return new ResponseEntity<List<MeterReading>>(list, HttpStatus.OK);
+        List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndMpxn(customerId, StringParser.parseLong(mpxn));
+        return new ResponseEntity<List<MeterReading>>(meterReadings, HttpStatus.OK);
     }
 
 }
