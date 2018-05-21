@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import jdk.nashorn.internal.objects.annotations.Getter;
+import lombok.Data;
 import lombok.Setter;
 
 /**
  * This is the nested Read object in the schema and is
  * contained in the larger MeterReading class.
  */
+@Data
 @Entity
 @Table(name = "read")
-@lombok.Getter
-@lombok.Setter
 public class Read {
 
     @Id

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
+import lombok.Data;
 
 /**
  * This object maps to the below schema and is used for ingesting
@@ -22,6 +23,7 @@ import java.util.List;
  *    "readDate": "2017-11-20T16:19:48+00:00Z"
  * }
  */
+@Data
 @Entity
 @Table(name = "meter_reading")
 public class MeterReading {
@@ -46,42 +48,6 @@ public class MeterReading {
     @JsonIgnore
     public void setMeterReadingId(Long meterReadingId) {
         this.meterReadingId = meterReadingId;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public long getSerialNumber() {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(long serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
-    public long getMpxn() {
-        return mpxn;
-    }
-
-    public void setMpxn(long mpxn) {
-        this.mpxn = mpxn;
-    }
-
-    public List<Read> getRead() {
-        return read;
-    }
-
-    public void setRead(List<Read> read) {
-        this.read = read;
-    }
-
-    public OffsetDateTime getReadDate() {
-        return readDate;
     }
 
     public void setReadDate(String readDate) {
