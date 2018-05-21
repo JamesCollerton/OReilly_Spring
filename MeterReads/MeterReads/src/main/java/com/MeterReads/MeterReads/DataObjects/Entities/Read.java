@@ -3,6 +3,8 @@ package com.MeterReads.MeterReads.DataObjects.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import lombok.Setter;
 
 /**
  * This is the nested Read object in the schema and is
@@ -10,6 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "read")
+@lombok.Getter
+@lombok.Setter
 public class Read {
 
     @Id
@@ -32,39 +36,5 @@ public class Read {
     @JsonIgnore
     public void setReadId(Long readId) {
         this.readId = readId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public long getRegisterId() {
-        return registerId;
-    }
-
-    public void setRegisterId(long registerId) {
-        this.registerId = registerId;
-    }
-
-    public long getValue() {
-        return value;
-    }
-
-    public void setValue(long value) {
-        this.value = value;
-    }
-
-    @JsonIgnore
-    public MeterReading getMeterReading() {
-        return meterReading;
-    }
-
-    @JsonIgnore
-    public void setMeterReading(MeterReading meterReading) {
-        this.meterReading = meterReading;
     }
 }
