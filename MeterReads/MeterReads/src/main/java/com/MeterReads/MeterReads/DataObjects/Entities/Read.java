@@ -1,11 +1,9 @@
 package com.MeterReads.MeterReads.DataObjects.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
-import jdk.nashorn.internal.objects.annotations.Getter;
-import lombok.Data;
-import lombok.Setter;
 
 /**
  * This is the nested Read object in the schema and is

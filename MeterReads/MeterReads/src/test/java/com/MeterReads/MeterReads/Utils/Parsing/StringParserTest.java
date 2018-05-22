@@ -12,19 +12,12 @@ public class StringParserTest {
         StringParser.parseLong("1");
     }
 
+    /**
+     * TODO: Decide what we want to do here.
+     */
     @Test
-    public void parseLong_String_ParsesCorrectly() {
+    public void parseLong_String_ParsesIncorrectly() {
         StringParser.parseLong("Hello");
     }
-
-//    @Test
-//    public void parseLong_ValidLong_ParsesCorrectly() {
-//
-//    }
-
-//    @Test
-//    public void parseLong_ValidLong_ParsesCorrectly() {
-//
-//    }
 
 }
