@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 
-@DataJpaTest
+@RunWith(SpringRunner.class)
 public class MeterReadingRepositoryTest {
 
     @Autowired
