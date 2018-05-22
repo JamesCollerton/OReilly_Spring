@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -86,7 +87,7 @@ public class MeterReadsApplication {
      *
      * @return A new docket for the configuration
      */
-    @Bean
+    @Bean @Profile("Development")
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
