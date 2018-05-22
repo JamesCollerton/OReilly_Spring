@@ -76,8 +76,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 
 @Configuration
-@EnableSwagger2
-@EnableAspectJAutoProxy
+//@EnableSwagger2
+//@EnableAspectJAutoProxy
 @SpringBootApplication
 public class MeterReadsApplication {
 
@@ -87,7 +87,7 @@ public class MeterReadsApplication {
      *
      * @return A new docket for the configuration
      */
-    @Bean @Profile("Development")
+    @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
