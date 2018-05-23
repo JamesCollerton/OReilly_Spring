@@ -2,6 +2,8 @@ package com.MeterReads.MeterReads.DataObjects.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -10,6 +12,8 @@ import javax.persistence.*;
  * contained in the larger MeterReading class.
  */
 @Data
+@EqualsAndHashCode(exclude = "meterReading")
+@ToString(exclude = "meterReading")
 @Entity
 @Table(name = "read")
 public class Read {

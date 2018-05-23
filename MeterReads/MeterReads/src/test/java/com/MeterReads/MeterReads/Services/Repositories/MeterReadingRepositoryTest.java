@@ -44,8 +44,7 @@ public class MeterReadingRepositoryTest {
 
         meterReading.setRead(Collections.singletonList(read));
 
-        testEntityManager.persist(meterReading);
-        testEntityManager.flush();
+        meterReadingRepository.save(meterReading);
 
         // Act
         List<MeterReading> returnedMeterReadings =
