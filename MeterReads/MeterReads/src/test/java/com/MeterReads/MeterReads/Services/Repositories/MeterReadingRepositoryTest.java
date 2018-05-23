@@ -2,7 +2,9 @@ package com.MeterReads.MeterReads.Services.Repositories;
 
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,9 +22,6 @@ import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 public class MeterReadingRepositoryTest {
 
     @Autowired
-    private TestEntityManager testEntityManager;
-
-    @Autowired
     private MeterReadingRepository meterReadingRepository;
     
     @Test
@@ -37,18 +36,19 @@ public class MeterReadingRepositoryTest {
         meterReading.setSerialNumber(1l);
 
         Read read = new Read();
-        read.setMeterReading(meterReading);
+//        read.setMeterReading(meterReading);
         read.setRegisterId(1l);
         read.setType("Type");
         read.setValue(1l);
 
         meterReading.setRead(Collections.singletonList(read));
 
-        meterReadingRepository.save(meterReading);
+        MeterReading reading = meterReadingRepository.save(meterReading);
 
         // Act
-        List<MeterReading> returnedMeterReadings =
-                meterReadingRepository.findByCustomerIdAndSerialNumber(meterReading.getCustomerId(), meterReading.getSerialNumber());
+        Iterable<MeterReading> returnedMeterReadingsIterator = meterReadingRepository.findAll();
+        List<MeterReading> returnedMeterReadings = new ArrayList<>();
+        returnedMeterReadingsIterator.forEach(returnedMeterReadings::add);
 
         // Assert
         assertThat(returnedMeterReadings, contains(meterReading));

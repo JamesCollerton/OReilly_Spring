@@ -12,7 +12,6 @@ import javax.persistence.*;
  * contained in the larger MeterReading class.
  */
 @Data
-@EqualsAndHashCode(exclude = "meterReading")
 @ToString(exclude = "meterReading")
 @Entity
 @Table(name = "read")
@@ -38,5 +37,15 @@ public class Read {
     @JsonIgnore
     public void setReadId(Long readId) {
         this.readId = readId;
+    }
+
+    @JsonIgnore
+    public MeterReading getMeterReading() {
+        return meterReading;
+    }
+
+    @JsonIgnore
+    public void setMeterReading(MeterReading meterReading) {
+        this.meterReading = meterReading;
     }
 }

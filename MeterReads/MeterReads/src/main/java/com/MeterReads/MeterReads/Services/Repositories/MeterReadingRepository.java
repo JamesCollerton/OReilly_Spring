@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MeterReadingRepository extends CrudRepository<MeterReading, Long> {
 
-    List<MeterReading> findByCustomerIdAndSerialNumber(String customerId, long mpxn);
+    List<MeterReading> findByCustomerIdAndSerialNumber(String customerId, long serialNumber);
 
 }
