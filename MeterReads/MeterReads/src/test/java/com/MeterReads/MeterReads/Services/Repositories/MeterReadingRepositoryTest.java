@@ -22,6 +22,9 @@ import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 public class MeterReadingRepositoryTest {
 
     @Autowired
+    private TestEntityManager entityManager;
+
+    @Autowired
     private MeterReadingRepository meterReadingRepository;
     
     @Test
@@ -35,13 +38,21 @@ public class MeterReadingRepositoryTest {
         meterReading.setReadDate("2017-11-20T16:19:48+00:00Z");
         meterReading.setSerialNumber(1l);
 
+//        entityManager.merge(meterReading);
+//        entityManager.flush();
+
         Read read = new Read();
-//        read.setMeterReading(meterReading);
+        read.setMeterReading(meterReading);
         read.setRegisterId(1l);
         read.setType("Type");
         read.setValue(1l);
 
+//        entityManager.merge(read);
+
         meterReading.setRead(Collections.singletonList(read));
+
+//        entityManager.merge(meterReading);
+//        entityManager.flush();
 
         MeterReading reading = meterReadingRepository.save(meterReading);
 

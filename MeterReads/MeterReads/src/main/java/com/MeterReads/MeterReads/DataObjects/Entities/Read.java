@@ -21,7 +21,7 @@ public class Read {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long readId;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="meterReadingId")
     private MeterReading meterReading;
 

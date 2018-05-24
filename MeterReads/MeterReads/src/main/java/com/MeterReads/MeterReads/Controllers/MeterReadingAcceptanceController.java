@@ -41,6 +41,7 @@ public class MeterReadingAcceptanceController {
     @RequestMapping(value = "/meter-read", method = POST)
     public ResponseEntity<MeterReading> meterRead(@RequestBody MeterReading meterReading) {
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
+//        meterReadingRepository.findAll();
         return new ResponseEntity<>(meterReadingSaved, HttpStatus.CREATED);
     }
 

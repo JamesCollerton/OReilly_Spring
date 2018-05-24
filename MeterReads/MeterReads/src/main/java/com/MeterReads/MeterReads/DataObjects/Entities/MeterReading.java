@@ -37,7 +37,7 @@ public class MeterReading {
     private long mpxn;
     private OffsetDateTime readDate;
 
-    @OneToMany(targetEntity=Read.class, mappedBy="meterReading", fetch=FetchType.EAGER)
+    @OneToMany(targetEntity=Read.class, mappedBy="meterReading", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Read> read;
 
     @JsonIgnore
