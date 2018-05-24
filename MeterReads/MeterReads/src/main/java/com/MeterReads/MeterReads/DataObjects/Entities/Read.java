@@ -12,6 +12,7 @@ import javax.persistence.*;
  * contained in the larger MeterReading class.
  */
 @Data
+@EqualsAndHashCode(exclude = {"readId", "meterReading"})
 @ToString(exclude = "meterReading")
 @Entity
 @Table(name = "read")

@@ -1,6 +1,7 @@
 package com.MeterReads.MeterReads.Services.Repositories;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,31 +39,32 @@ public class MeterReadingRepositoryTest {
         meterReading.setReadDate("2017-11-20T16:19:48+00:00Z");
         meterReading.setSerialNumber(1l);
 
-//        entityManager.merge(meterReading);
-//        entityManager.flush();
-
         Read read = new Read();
         read.setMeterReading(meterReading);
         read.setRegisterId(1l);
         read.setType("Type");
         read.setValue(1l);
 
-//        entityManager.merge(read);
-
         meterReading.setRead(Collections.singletonList(read));
 
-//        entityManager.merge(meterReading);
-//        entityManager.flush();
-
-        MeterReading reading = meterReadingRepository.save(meterReading);
+        MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
 
         // Act
         Iterable<MeterReading> returnedMeterReadingsIterator = meterReadingRepository.findAll();
         List<MeterReading> returnedMeterReadings = new ArrayList<>();
         returnedMeterReadingsIterator.forEach(returnedMeterReadings::add);
 
+        List<Read> listOne = Collections.singletonList(returnedMeterReadings.get(0).getRead().get(0));
+        List<Read> listTwo = Collections.singletonList(read);
+
+        listOne.equals(listTwo);
+
+        read.equals(returnedMeterReadings.get(0).getRead().get(0));
+
+        returnedMeterReadings.get(0).equals(meterReading);
+
         // Assert
-        assertThat(returnedMeterReadings, contains(meterReading));
+        assertThat(returnedMeterReadings.get(0).equals(meterReadingSaved), is(true));
     }
 
 }

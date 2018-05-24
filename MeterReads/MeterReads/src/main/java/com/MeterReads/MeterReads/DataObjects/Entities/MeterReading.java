@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * This object maps to the below schema and is used for ingesting
@@ -24,6 +25,7 @@ import lombok.Data;
  * }
  */
 @Data
+@EqualsAndHashCode(exclude = "meterReadingId")
 @Entity
 @Table(name = "meter_reading")
 public class MeterReading {
