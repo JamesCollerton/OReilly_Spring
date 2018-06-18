@@ -3,6 +3,7 @@ package com.MeterReads.MeterReads.Services.Repositories;
 import org.springframework.data.repository.CrudRepository;
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -21,5 +22,7 @@ public interface MeterReadingRepository extends CrudRepository<MeterReading, Lon
      * @return All meter readings with that customer Id and serial number
      */
     List<MeterReading> findByCustomerIdAndSerialNumber(String customerId, long serialNumber);
+
+    List<MeterReading> findByCustomerIdAndSerialNumberAndMpxnAndReadDate(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate);
 
 }
