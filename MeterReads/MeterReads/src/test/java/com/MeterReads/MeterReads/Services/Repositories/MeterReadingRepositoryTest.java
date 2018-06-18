@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,54 +26,20 @@ public class MeterReadingRepositoryTest {
     
     @Test
     public void saveAndFindMeterReading_ValidMeterReading_ReturnsCorrectly() {
+        saveAndFindMeterReading("Customer Id", 1l, 1l, "2017-11-20T16:19:48+00:00Z", 1l, "Type", 1l);
+    }
 
-        findAndSaveMeterReading("Customer Id", 1l, 1l, "2017-11-20T16:19:48+00:00Z", 1l, "Type", 1l);
-
-        // Arrange
-        MeterReading meterReading = new MeterReading();
-
-        meterReading.setCustomerId("Customer Id");
-        meterReading.setMeterReadingId(1l);
-        meterReading.setMpxn(1l);
-        meterReading.setReadDate("2017-11-20T16:19:48+00:00Z");
-        meterReading.setSerialNumber(1l);
-
-        Read read = new Read();
-        read.setMeterReading(meterReading);
-        read.setRegisterId(1l);
-        read.setType("Type");
-        read.setValue(1l);
-
-        meterReading.setRead(Collections.singletonList(read));
-
-        MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
-
-        // Act
-
-        Iterable<MeterReading> returnedMeterReadingsIterator = meterReadingRepository.findAll();
-        List<MeterReading> returnedMeterReadings = new ArrayList<>();
-        returnedMeterReadingsIterator.forEach(returnedMeterReadings::add);
-
-        List<Read> listOne = Collections.singletonList(returnedMeterReadings.get(0).getRead().get(0));
-        List<Read> listTwo = Collections.singletonList(read);
-
-        listOne.equals(listTwo);
-
-        read.equals(returnedMeterReadings.get(0).getRead().get(0));
-
-        returnedMeterReadings.get(0).equals(meterReading);
-
-        // Assert
-        assertThat(returnedMeterReadings.get(0).equals(meterReadingSaved), is(true));
+    @Test
+    public void saveAndFindMeterReadingByCustomerIdAndSerialNumber_ValidCustomerIdAndSerialNumber_ReturnsCorrectly() {
+        saveAndFindMeterReadingByCustomerIdAndSerialNumber("Customer Id", 1l, 1l, "2017-11-20T16:19:48+00:00Z", 1l, "Type", 1l);
     }
 
     /*
         Utilities
      */
 
-    public void findAndSaveMeterReading(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
+    public MeterReading createMeterReading(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
 
-        // Arrange
         MeterReading meterReading = new MeterReading();
 
         meterReading.setCustomerId(customerId);
@@ -82,8 +47,6 @@ public class MeterReadingRepositoryTest {
         meterReading.setMpxn(mpxn);
         meterReading.setReadDate(readDateString);
         meterReading.setSerialNumber(serialNumber);
-
-        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
 
         Read read = new Read();
         read.setMeterReading(meterReading);
@@ -93,12 +56,38 @@ public class MeterReadingRepositoryTest {
 
         meterReading.setRead(Collections.singletonList(read));
 
+        return meterReading;
+    }
+
+    private void saveAndFindMeterReading(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
+
+        // Arrange
+        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
+
+        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
+
         // Act
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
-
-        // Assert
         List<MeterReading> savedReading = meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(customerId, serialNumber, mpxn, readDate);
 
+        // Assert
+        assertTrue(savedReading.size() == 1);
+        assertThat(savedReading.get(0).equals(meterReadingSaved), is(true));
+
+    }
+
+    private void saveAndFindMeterReadingByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
+
+        // Arrange
+        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
+
+        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
+
+        // Act
+        MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
+        List<MeterReading> savedReading = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, serialNumber);
+
+        // Assert
         assertTrue(savedReading.size() == 1);
         assertThat(savedReading.get(0).equals(meterReadingSaved), is(true));
 
