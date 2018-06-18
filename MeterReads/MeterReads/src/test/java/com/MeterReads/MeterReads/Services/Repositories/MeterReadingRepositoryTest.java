@@ -26,7 +26,7 @@ public class MeterReadingRepositoryTest {
     
     @Test
     public void saveAndFindMeterReading_ValidMeterReading_ReturnsCorrectly() {
-        saveAndFindMeterReading("Customer Id", 1l, 1l, "2017-11-20T16:19:48+00:00Z", 1l, "Type", 1l);
+        saveAndFindMeterReadingByAllFields("Customer Id", 1l, 1l, "2017-11-20T16:19:48+00:00Z", 1l, "Type", 1l);
     }
 
     @Test
@@ -59,7 +59,45 @@ public class MeterReadingRepositoryTest {
         return meterReading;
     }
 
-    private void saveAndFindMeterReading(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
+    private void saveAndFindMeterReadingByAllFields(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
+
+//        // Arrange
+//        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
+//
+//        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
+//
+//        // Act
+//        MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
+//        List<MeterReading> savedReading = meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(customerId, serialNumber, mpxn, readDate);
+//
+//        // Assert
+//        assertTrue(savedReading.size() == 1);
+//        assertThat(savedReading.get(0).equals(meterReadingSaved), is(true));
+
+        saveAndFindMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value, this::findByCustomerIdAndSerialNumberAndMpxnAndReadDate);
+
+    }
+
+    private void saveAndFindMeterReadingByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
+
+//        // Arrange
+//        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
+//
+//        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
+//
+//        // Act
+//        MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
+//        List<MeterReading> savedReading = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, serialNumber);
+//
+//        // Assert
+//        assertTrue(savedReading.size() == 1);
+//        assertThat(savedReading.get(0).equals(meterReadingSaved), is(true));
+
+        saveAndFindMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value, this::findByCustomerIdAndSerialNumber);
+
+    }
+
+    private void saveAndFindMeterReading(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value, FindByFunction findByFunction) {
 
         // Arrange
         MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
@@ -68,7 +106,7 @@ public class MeterReadingRepositoryTest {
 
         // Act
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
-        List<MeterReading> savedReading = meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(customerId, serialNumber, mpxn, readDate);
+        List<MeterReading> savedReading = findByFunction.apply(customerId, serialNumber, mpxn, readDate, registerId, type, value);
 
         // Assert
         assertTrue(savedReading.size() == 1);
@@ -76,21 +114,17 @@ public class MeterReadingRepositoryTest {
 
     }
 
-    private void saveAndFindMeterReadingByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
+    @FunctionalInterface
+    private interface FindByFunction {
+        List<MeterReading> apply(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate, long registerId, String type, Long value);
+    }
 
-        // Arrange
-        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
+    private List<MeterReading> findByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate, long registerId, String type, Long value) {
+        return meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, serialNumber);
+    }
 
-        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
-
-        // Act
-        MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
-        List<MeterReading> savedReading = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, serialNumber);
-
-        // Assert
-        assertTrue(savedReading.size() == 1);
-        assertThat(savedReading.get(0).equals(meterReadingSaved), is(true));
-
+    private List<MeterReading> findByCustomerIdAndSerialNumberAndMpxnAndReadDate(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate, long registerId, String type, Long value) {
+        return meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(customerId, serialNumber, mpxn, readDate);
     }
 
 }
