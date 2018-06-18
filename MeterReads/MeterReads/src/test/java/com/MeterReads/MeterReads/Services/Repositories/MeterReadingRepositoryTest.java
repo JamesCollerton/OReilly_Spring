@@ -60,41 +60,11 @@ public class MeterReadingRepositoryTest {
     }
 
     private void saveAndFindMeterReadingByAllFields(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
-
-//        // Arrange
-//        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
-//
-//        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
-//
-//        // Act
-//        MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
-//        List<MeterReading> savedReading = meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(customerId, serialNumber, mpxn, readDate);
-//
-//        // Assert
-//        assertTrue(savedReading.size() == 1);
-//        assertThat(savedReading.get(0).equals(meterReadingSaved), is(true));
-
         saveAndFindMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value, this::findByCustomerIdAndSerialNumberAndMpxnAndReadDate);
-
     }
 
     private void saveAndFindMeterReadingByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
-
-//        // Arrange
-//        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
-//
-//        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
-//
-//        // Act
-//        MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
-//        List<MeterReading> savedReading = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, serialNumber);
-//
-//        // Assert
-//        assertTrue(savedReading.size() == 1);
-//        assertThat(savedReading.get(0).equals(meterReadingSaved), is(true));
-
         saveAndFindMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value, this::findByCustomerIdAndSerialNumber);
-
     }
 
     private void saveAndFindMeterReading(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value, FindByFunction findByFunction) {
