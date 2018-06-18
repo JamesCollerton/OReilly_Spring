@@ -1,29 +1,23 @@
 package com.MeterReads.MeterReads.Services.Repositories;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
+import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
-import com.MeterReads.MeterReads.DataObjects.Entities.Read;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class MeterReadingRepositoryTest {
-
-    @Autowired
-    private TestEntityManager entityManager;
 
     @Autowired
     private MeterReadingRepository meterReadingRepository;
@@ -33,6 +27,7 @@ public class MeterReadingRepositoryTest {
 
         // Arrange
         MeterReading meterReading = new MeterReading();
+
         meterReading.setCustomerId("Customer Id");
         meterReading.setMeterReadingId(1l);
         meterReading.setMpxn(1l);

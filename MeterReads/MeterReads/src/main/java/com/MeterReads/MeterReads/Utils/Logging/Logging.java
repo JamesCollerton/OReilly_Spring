@@ -11,6 +11,11 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * This is an aspect to do all of the logging for the program. It
+ * uses different logging depending on what we are executing. Some
+ * just map parameters, others time processes etc.
+ */
 @Aspect
 @Component
 public class Logging {
