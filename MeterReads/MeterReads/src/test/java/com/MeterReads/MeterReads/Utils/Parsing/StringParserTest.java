@@ -1,14 +1,12 @@
 package com.MeterReads.MeterReads.Utils.Parsing;
 
-import antlr.StringUtils;
+import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class StringParserTest {
 
     @Test
-    public void parseLong_ValidLong_ParsesCorrectly() {
+    public void parseLong_ValidLong_ParsesCorrectly() throws MeterReadsException {
         StringParser.parseLong("1");
     }
 
