@@ -2,6 +2,7 @@ package com.MeterReads.MeterReads.Controllers;
 
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
+import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 import com.MeterReads.MeterReads.Utils.Parsing.StringParser;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,8 +44,12 @@ public class MeterReadingPresentationController {
     )
     @RequestMapping(value = "/meter-read", method = GET)
     public ResponseEntity<List<MeterReading>> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "serialNumber") String serialNumber) {
-        List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, StringParser.parseLong(serialNumber));
-        return new ResponseEntity<List<MeterReading>>(meterReadings, HttpStatus.OK);
+        try {
+            List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, StringParser.parseLong(serialNumber));
+            return new ResponseEntity<>(meterReadings, HttpStatus.OK);
+        } catch (MeterReadsException e) {
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

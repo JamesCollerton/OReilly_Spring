@@ -8,6 +8,9 @@ import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
  */
 public class StringParser {
 
+    public static final String EXCEPTION_PREFIX = "String ";
+    public static final String EXCEPTION_SUFFIX = " could not be parsed";
+
     /**
      * This parses a string to a long
      *
@@ -19,7 +22,7 @@ public class StringParser {
         try {
             return Long.parseLong(input);
         } catch (NumberFormatException e) {
-            throw new MeterReadsException("String " + input + " could not be parsed", e);
+            throw new MeterReadsException(EXCEPTION_PREFIX + input + EXCEPTION_SUFFIX, e);
         }
     }
 
