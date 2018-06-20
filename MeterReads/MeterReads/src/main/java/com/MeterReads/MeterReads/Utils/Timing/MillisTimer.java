@@ -4,6 +4,8 @@ import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 
 public class MillisTimer {
 
+    public static final String TIMER_FINISHED_BEFORE_STARTED = "Timer finish before timer started";
+
     private static final long DEFAULT_START_TIME = 0;
 
     private long startTime;
@@ -15,7 +17,7 @@ public class MillisTimer {
 
     public void finish() throws MeterReadsException {
         if(startTime == DEFAULT_START_TIME) {
-            throw new MeterReadsException("Timer finish called before timer started");
+            throw new MeterReadsException(TIMER_FINISHED_BEFORE_STARTED);
         }
         endTime = System.currentTimeMillis();
     }
