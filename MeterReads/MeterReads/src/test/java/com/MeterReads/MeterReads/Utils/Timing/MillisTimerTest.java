@@ -2,12 +2,11 @@ package com.MeterReads.MeterReads.Utils.Timing;
 
 import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsExceptionTestHelper;
-import com.MeterReads.MeterReads.Utils.Parsing.StringParser;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class MillisTimerTest {
 
