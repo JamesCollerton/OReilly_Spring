@@ -34,10 +34,8 @@ public class MeterReadingPresentationControllerTest {
 
     @Test
     public void test() throws Exception {
-        mockMvc.perform(get("/meter-read")
-                .param("customerId", "1")
-                .param("serialNumber", "2")
-        ).andDo(print()).andExpect(status().isOk());
+        mockMvc.perform(get("/meter-read/customerIds/{customerId}/serialNumbers/{serialNumber}", "1", "2"))
+                .andDo(print()).andExpect(status().isOk());
     }
 
 }
