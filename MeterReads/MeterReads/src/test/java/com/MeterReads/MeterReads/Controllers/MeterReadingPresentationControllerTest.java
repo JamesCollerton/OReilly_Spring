@@ -33,6 +33,36 @@ public class MeterReadingPresentationControllerTest {
     }
 
     @Test
+    public void meterRead_ValidRequestNoData_ExecutesReturnsNoData() {
+
+    }
+
+    @Test
+    public void meterRead_ValidRequestData_ExecutesReturnsCorrectData() {
+
+    }
+
+    @Test
+    public void meterRead_ValidRequestDataNoReads_ExecutesReturnsCorrectData() {
+
+    }
+
+    @Test
+    public void meterRead_InvalidRequestNoCustomerId_ExecutesReturnsErrorCode() {
+
+    }
+
+    @Test
+    public void meterRead_InvalidRequestNoSerialNumber_ExecutesReturnsErrorCode() {
+
+    }
+
+    @Test
+    public void meterRead_InvalidRequestInvalidURI_ExecutesReturnsErrorCode() {
+
+    }
+
+    @Test
     public void test() throws Exception {
         mockMvc.perform(get("/meter-read/customerIds/{customerId}/serialNumbers/{serialNumber}", "1", "2"))
                 .andDo(print()).andExpect(status().isOk());
