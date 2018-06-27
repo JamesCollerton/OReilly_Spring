@@ -81,7 +81,7 @@ public class MeterReadingRepositoryTest {
         // Assert
         assertTrue(savedReading.size() == 1);
         assertThat(savedReading.get(0).equals(meterReadingSaved), is(true));
-
+        assertThat(savedReading.get(0).getRead().equals(meterReadingSaved.getRead()), is(true));
     }
 
     @FunctionalInterface

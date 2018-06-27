@@ -1,9 +1,9 @@
 package com.MeterReads.MeterReads.Controllers;
 
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
+import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 import com.MeterReads.MeterReads.MeterReadsApplication;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +14,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Collections;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringRunner.class)
@@ -55,11 +55,16 @@ public class MeterReadingPresentationControllerTest {
 
         String customerId = "customerId";
         long serialNumber = 1l;
+        long registerId = 1l;
 
         MeterReading meterReading = new MeterReading();
+        Read read = new Read();
+
+        read.setRegisterId(registerId);
 
         meterReading.setCustomerId(customerId);
         meterReading.setSerialNumber(serialNumber);
+        meterReading.setRead(Collections.singletonList(read));
 
         MeterReading savedMeterReading = meterReadingRepository.save(meterReading);
 
@@ -68,8 +73,9 @@ public class MeterReadingPresentationControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].customerId", is(savedMeterReading.getCustomerId())))
-                .andExpect(jsonPath("$[0].serialNumber", is(new Long(savedMeterReading.getSerialNumber()).intValue())));
-        
+                .andExpect(jsonPath("$[0].serialNumber", is(new Long(savedMeterReading.getSerialNumber()).intValue())))
+                .andExpect(jsonPath("$[0].read[0].registerId", is(new Long(savedMeterReading.getSerialNumber()).intValue())));
+
     }
 
     @Test

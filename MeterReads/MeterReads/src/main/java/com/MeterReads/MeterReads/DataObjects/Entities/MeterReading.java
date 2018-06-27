@@ -23,6 +23,8 @@ import lombok.EqualsAndHashCode;
  *    ],
  *    "readDate": "2017-11-20T16:19:48+00:00Z"
  * }
+ *
+ * Note: To connect to the H2 console we need to use jdbc:h2:mem:testdb
  */
 @Data
 @EqualsAndHashCode(exclude = "meterReadingId")
@@ -32,6 +34,7 @@ public class MeterReading {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "METER_READING_ID")
     private Long meterReadingId;
 
     private String customerId;
@@ -39,7 +42,12 @@ public class MeterReading {
     private long mpxn;
     private OffsetDateTime readDate;
 
-    @OneToMany(targetEntity=Read.class, mappedBy="meterReading", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(
+            targetEntity=Read.class,
+            mappedBy="meterReading",
+            fetch=FetchType.EAGER,
+            cascade=CascadeType.ALL
+    )
     private List<Read> read;
 
     @JsonIgnore

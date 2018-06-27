@@ -23,7 +23,7 @@ public class Read {
     private Long readId;
 
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="meterReadingId")
+    @JoinColumn(name="METER_READING_ID")
     private MeterReading meterReading;
 
     private String type;
