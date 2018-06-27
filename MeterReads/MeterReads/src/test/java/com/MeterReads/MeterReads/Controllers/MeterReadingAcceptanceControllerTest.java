@@ -19,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -68,11 +69,14 @@ public class MeterReadingAcceptanceControllerTest {
         MeterReading meterReading = new MeterReading();
         Read read = new Read();
         meterReading.setRead(Collections.singletonList(read));
+        meterReading.setReadDate("2017-11-20T16:19:48+00:01Z");
+
+        // The date isn't being converted to json correctly
 
         mockMvc.perform(post("/meter-read")
-                .content(this.json(meterReading))
-                .contentType(contentType))
-                .andDo(print()).andExpect(status().isOk());
+                .contentType(contentType)
+                .content(this.json(meterReading)))
+                .andDo(print()).andExpect(status().isCreated());
     }
 
     private String json(Object o) throws IOException {
