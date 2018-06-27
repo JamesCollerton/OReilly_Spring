@@ -1,6 +1,7 @@
 package com.MeterReads.MeterReads.Controllers;
 
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
+import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

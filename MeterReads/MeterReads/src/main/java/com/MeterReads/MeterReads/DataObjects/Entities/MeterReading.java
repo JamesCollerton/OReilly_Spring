@@ -60,6 +60,13 @@ public class MeterReading {
         this.meterReadingId = meterReadingId;
     }
 
+    public void setRead(List<Read> read) {
+        for(Read individualRead: read) {
+            individualRead.setMeterReading(this);
+        }
+        this.read = read;
+    }
+
     public void setReadDate(String readDate) {
         this.readDate = DateTimeUtils.parseISO8601Date(readDate);
     }
