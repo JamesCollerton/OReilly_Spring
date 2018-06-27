@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class DateTimeUtils {
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXXVV");
+
     /**
      * A method used to parse ISO8601 date strings. It uses a custom formatter
      * to allow for offsets as well as the specification of timezones.
@@ -17,8 +19,12 @@ public class DateTimeUtils {
      * @return The parsed datetime.
      */
     public static OffsetDateTime parseISO8601Date(String dateString) {
-        DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXXVV");
-        return OffsetDateTime.parse(dateString, parser);
+//        DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXXVV");
+        return OffsetDateTime.parse(dateString, FORMATTER);
+    }
+
+    public static String convertOffsetDateTimeToISO8601DateString(OffsetDateTime offsetDateTime) {
+        return offsetDateTime.format(FORMATTER);
     }
 
 }

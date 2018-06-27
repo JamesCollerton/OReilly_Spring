@@ -69,7 +69,7 @@ public class MeterReadingAcceptanceControllerTest {
         MeterReading meterReading = new MeterReading();
         Read read = new Read();
         meterReading.setRead(Collections.singletonList(read));
-        meterReading.setReadDate("2017-11-20T16:19:48+00:01Z");
+        meterReading.setReadDate("2017-11-20T16:19:48+00:00Z");
 
         // The date isn't being converted to json correctly
 
