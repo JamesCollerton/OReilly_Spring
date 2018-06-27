@@ -34,6 +34,6 @@ public interface MeterReadingRepository extends CrudRepository<MeterReading, Lon
      *
      * @return All meter readings with the corresponding parameter values
      */
-    List<MeterReading> findByCustomerIdAndSerialNumberAndMpxnAndReadDate(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate);
+    List<MeterReading> findByCustomerIdAndSerialNumberAndMpxnAndReadDate(String customerId, long serialNumber, long mpxn, String readDate);
 
 }

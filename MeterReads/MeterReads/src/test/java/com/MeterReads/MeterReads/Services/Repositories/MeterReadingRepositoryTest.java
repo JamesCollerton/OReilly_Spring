@@ -38,14 +38,14 @@ public class MeterReadingRepositoryTest {
         Utilities
      */
 
-    public MeterReading createMeterReading(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
+    public MeterReading createMeterReading(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value) {
 
         MeterReading meterReading = new MeterReading();
 
         meterReading.setCustomerId(customerId);
         meterReading.setMeterReadingId(serialNumber);
         meterReading.setMpxn(mpxn);
-        meterReading.setReadDate(readDateString);
+        meterReading.setReadDate(readDate);
         meterReading.setSerialNumber(serialNumber);
 
         Read read = new Read();
@@ -59,20 +59,20 @@ public class MeterReadingRepositoryTest {
         return meterReading;
     }
 
-    private void saveAndFindMeterReadingByAllFields(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
-        saveAndFindMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value, this::findByCustomerIdAndSerialNumberAndMpxnAndReadDate);
+    private void saveAndFindMeterReadingByAllFields(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value) {
+        saveAndFindMeterReading(customerId, serialNumber, mpxn, readDate, registerId, type, value, this::findByCustomerIdAndSerialNumberAndMpxnAndReadDate);
     }
 
-    private void saveAndFindMeterReadingByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value) {
-        saveAndFindMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value, this::findByCustomerIdAndSerialNumber);
+    private void saveAndFindMeterReadingByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value) {
+        saveAndFindMeterReading(customerId, serialNumber, mpxn, readDate, registerId, type, value, this::findByCustomerIdAndSerialNumber);
     }
 
-    private void saveAndFindMeterReading(String customerId, long serialNumber, long mpxn, String readDateString, long registerId, String type, Long value, FindByFunction findByFunction) {
+    private void saveAndFindMeterReading(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value, FindByFunction findByFunction) {
 
         // Arrange
-        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDateString, registerId, type, value);
+        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDate, registerId, type, value);
 
-        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDateString);
+//        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDate);
 
         // Act
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
@@ -86,14 +86,14 @@ public class MeterReadingRepositoryTest {
 
     @FunctionalInterface
     private interface FindByFunction {
-        List<MeterReading> apply(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate, long registerId, String type, Long value);
+        List<MeterReading> apply(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value);
     }
 
-    private List<MeterReading> findByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate, long registerId, String type, Long value) {
+    private List<MeterReading> findByCustomerIdAndSerialNumber(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value) {
         return meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, serialNumber);
     }
 
-    private List<MeterReading> findByCustomerIdAndSerialNumberAndMpxnAndReadDate(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate, long registerId, String type, Long value) {
+    private List<MeterReading> findByCustomerIdAndSerialNumberAndMpxnAndReadDate(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value) {
         return meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(customerId, serialNumber, mpxn, readDate);
     }
 

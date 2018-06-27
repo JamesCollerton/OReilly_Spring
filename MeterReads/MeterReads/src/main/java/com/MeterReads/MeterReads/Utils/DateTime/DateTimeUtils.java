@@ -19,12 +19,7 @@ public class DateTimeUtils {
      * @return The parsed datetime.
      */
     public static OffsetDateTime parseISO8601Date(String dateString) {
-//        DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXXVV");
         return OffsetDateTime.parse(dateString, FORMATTER);
-    }
-
-    public static String convertOffsetDateTimeToISO8601DateString(OffsetDateTime offsetDateTime) {
-        return offsetDateTime.format(FORMATTER);
     }
 
 }

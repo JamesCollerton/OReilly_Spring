@@ -3,6 +3,7 @@ package com.MeterReads.MeterReads.Controllers;
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 import com.MeterReads.MeterReads.MeterReadsApplication;
+import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,7 @@ import java.nio.charset.Charset;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -45,6 +47,9 @@ public class MeterReadingAcceptanceControllerTest {
     private MockMvc mockMvc;
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
+    @Autowired
+    private MeterReadingRepository meterReadingRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -104,6 +109,13 @@ public class MeterReadingAcceptanceControllerTest {
                 .andExpect(jsonPath("$.read[0].type", is(read.getType())))
                 .andExpect(jsonPath("$.read[0].registerId", is(new Long(read.getRegisterId()).intValue())))
                 .andExpect(jsonPath("$.read[0].value", is(new Long(read.getValue()).intValue())));
+
+        List<MeterReading> meterReadingSaved = meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(
+                customerId,
+                serialNumber,
+                mpxn,
+                readDate
+        );
 
     }
 

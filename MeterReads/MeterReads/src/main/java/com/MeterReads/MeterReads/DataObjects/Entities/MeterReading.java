@@ -40,9 +40,7 @@ public class MeterReading {
     private String customerId;
     private long serialNumber;
     private long mpxn;
-
     private String readDate;
-    private OffsetDateTime readDateOffsetDateTime;
 
     @OneToMany(
             targetEntity=Read.class,
@@ -62,16 +60,6 @@ public class MeterReading {
         this.meterReadingId = meterReadingId;
     }
 
-    @JsonIgnore
-    public OffsetDateTime getReadDateOffsetDateTime() {
-        return readDateOffsetDateTime;
-    }
-
-    @JsonIgnore
-    public void setReadDateOffsetDateTime(OffsetDateTime readDateOffsetDateTime) {
-        this.readDateOffsetDateTime = readDateOffsetDateTime;
-    }
-
     public void setRead(List<Read> read) {
         for(Read individualRead: read) {
             individualRead.setMeterReading(this);
@@ -81,7 +69,15 @@ public class MeterReading {
 
     public void setReadDate(String readDate) {
         this.readDate = readDate;
-        setReadDateOffsetDateTime(DateTimeUtils.parseISO8601Date(readDate));
+    }
+
+    /*
+        Utilities
+     */
+
+    @JsonIgnore
+    public OffsetDateTime getReadDateAsOffsetDateTime() {
+        return DateTimeUtils.parseISO8601Date(this.readDate);
     }
 
 }
