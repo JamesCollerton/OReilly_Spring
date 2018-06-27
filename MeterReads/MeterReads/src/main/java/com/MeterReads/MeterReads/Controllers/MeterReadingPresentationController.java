@@ -43,8 +43,8 @@ public class MeterReadingPresentationController {
             notes = "Meter reading will be returned as JSON",
             response = ResponseEntity.class
     )
-    @RequestMapping(value = "/meter-read/customerIds/{customerId}/serialNumbers/{serialNumber}", method = GET)
-    public ResponseEntity<List<MeterReading>> meterRead(@PathVariable String customerId, @PathVariable String serialNumber) {
+    @RequestMapping(value = "/meter-read/meter-reads", method = GET)
+    public ResponseEntity<List<MeterReading>> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "serialNumber") String serialNumber) {
         try {
             List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, StringParser.parseLong(serialNumber));
             return new ResponseEntity<>(meterReadings, HttpStatus.OK);

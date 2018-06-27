@@ -45,7 +45,10 @@ public class MeterReadingPresentationControllerTest {
 
     @Test
     public void meterRead_ValidRequestNoData_ExecutesReturnsNoData() throws Exception {
-        mockMvc.perform(get("/meter-read/customerIds/{customerId}/serialNumbers/{serialNumber}", "customerId", "1"))
+        mockMvc.perform(get("/meter-read/meter-reads")
+                    .param("customerId", "customerId")
+                    .param("serialNumber", "1")
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
@@ -54,8 +57,8 @@ public class MeterReadingPresentationControllerTest {
     public void meterRead_ValidRequestData_ExecutesReturnsCorrectData() throws Exception {
 
         String customerId = "customerId";
-        long serialNumber = 1l;
-        long registerId = 1l;
+        long serialNumber = 1;
+        long registerId = 1;
 
         MeterReading meterReading = new MeterReading();
         Read read = new Read();
@@ -68,7 +71,10 @@ public class MeterReadingPresentationControllerTest {
 
         MeterReading savedMeterReading = meterReadingRepository.save(meterReading);
 
-        mockMvc.perform(get("/meter-read/customerIds/{customerId}/serialNumbers/{serialNumber}", customerId, serialNumber))
+        mockMvc.perform(get("/meter-read/meter-reads")
+                    .param("customerId", customerId)
+                    .param("serialNumber", Long.toString(serialNumber))
+                )
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(1)))
