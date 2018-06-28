@@ -72,8 +72,6 @@ public class MeterReadingRepositoryTest {
         // Arrange
         MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDate, registerId, type, value);
 
-//        OffsetDateTime readDate = DateTimeUtils.parseISO8601Date(readDate);
-
         // Act
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
         List<MeterReading> savedReading = findByFunction.apply(customerId, serialNumber, mpxn, readDate, registerId, type, value);

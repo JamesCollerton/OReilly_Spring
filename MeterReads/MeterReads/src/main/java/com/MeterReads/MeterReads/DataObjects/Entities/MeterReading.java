@@ -75,6 +75,12 @@ public class MeterReading {
         Utilities
      */
 
+    /**
+     * This is used if we want to return the readDate not as a string but
+     * as an OffsetDateTime we can use in the program.
+     *
+     * @return The offset date time of the string
+     */
     @JsonIgnore
     public OffsetDateTime getReadDateAsOffsetDateTime() {
         return DateTimeUtils.parseISO8601Date(this.readDate);

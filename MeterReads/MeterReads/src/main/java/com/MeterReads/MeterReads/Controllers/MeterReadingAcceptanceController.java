@@ -42,6 +42,7 @@ public class MeterReadingAcceptanceController {
     @RequestMapping(value = "/meter-read", method = POST)
     public ResponseEntity<MeterReading> meterRead(@RequestBody MeterReading meterReading) {
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
+        // TODO: Should there be an exception catch here?
         return new ResponseEntity<>(meterReadingSaved, HttpStatus.CREATED);
     }
 

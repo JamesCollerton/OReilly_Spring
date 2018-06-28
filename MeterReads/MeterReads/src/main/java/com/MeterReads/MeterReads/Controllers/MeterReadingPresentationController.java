@@ -49,6 +49,7 @@ public class MeterReadingPresentationController {
             List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, StringParser.parseLong(serialNumber));
             return new ResponseEntity<>(meterReadings, HttpStatus.OK);
         } catch (MeterReadsException e) {
+            // TODO: What should we return here?
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
         }
     }

@@ -4,6 +4,8 @@ import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 import com.MeterReads.MeterReads.MeterReadsApplication;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,7 @@ import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
@@ -97,7 +100,7 @@ public class MeterReadingAcceptanceControllerTest {
 
         meterReading.setRead(Collections.singletonList(read));
 
-        mockMvc.perform(post("/meter-read")
+        MvcResult mvcResult = mockMvc.perform(post("/meter-read")
                 .contentType(contentType)
                 .content(this.json(meterReading)))
                 .andDo(print()).andExpect(status().isCreated())
@@ -108,7 +111,13 @@ public class MeterReadingAcceptanceControllerTest {
                 .andExpect(jsonPath("$.read", hasSize(1)))
                 .andExpect(jsonPath("$.read[0].type", is(read.getType())))
                 .andExpect(jsonPath("$.read[0].registerId", is(new Long(read.getRegisterId()).intValue())))
-                .andExpect(jsonPath("$.read[0].value", is(new Long(read.getValue()).intValue())));
+                .andExpect(jsonPath("$.read[0].value", is(new Long(read.getValue()).intValue())))
+                .andReturn();
+
+        String responseString = mvcResult.getResponse().getContentAsString();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        MeterReading responseReading = objectMapper.readValue(responseString, MeterReading.class);
 
         List<MeterReading> meterReadingSaved = meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(
                 customerId,
@@ -116,6 +125,18 @@ public class MeterReadingAcceptanceControllerTest {
                 mpxn,
                 readDate
         );
+
+        assertThat(meterReadingSaved.size(), is(1));
+        assertThat(meterReadingSaved.get(0).getRead().size(), is(1));
+
+        meterReading.setMeterReadingId(null);
+        meterReading.getRead().get(0).setReadId(null);
+
+        meterReadingSaved.get(0).setMeterReadingId(null);
+        meterReadingSaved.get(0).getRead().get(0).setReadId(null);
+
+        assertThat(meterReadingSaved.get(0).equals(meterReading), is(true));
+        assertThat(meterReadingSaved.get(0).getRead().equals(meterReading.getRead()), is(true));
 
     }
 
