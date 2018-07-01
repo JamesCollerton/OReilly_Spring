@@ -6,6 +6,7 @@ import com.MeterReads.MeterReads.MeterReadsApplication;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
+import org.hibernate.collection.internal.PersistentBag;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -98,7 +100,7 @@ public class MeterReadingAcceptanceControllerTest {
         read.setRegisterId(registerId);
         read.setValue(value);
 
-        meterReading.setRead(Collections.singletonList(read));
+        meterReading.setRead(new ArrayList<>(Collections.singletonList(read)));
 
         MvcResult mvcResult = mockMvc.perform(post("/meter-read")
                 .contentType(contentType)
@@ -113,12 +115,7 @@ public class MeterReadingAcceptanceControllerTest {
                 .andExpect(jsonPath("$.read[0].registerId", is(new Long(read.getRegisterId()).intValue())))
                 .andExpect(jsonPath("$.read[0].value", is(new Long(read.getValue()).intValue())))
                 .andReturn();
-
-        String responseString = mvcResult.getResponse().getContentAsString();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        MeterReading responseReading = objectMapper.readValue(responseString, MeterReading.class);
-
+        
         List<MeterReading> meterReadingSaved = meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(
                 customerId,
                 serialNumber,
@@ -134,6 +131,8 @@ public class MeterReadingAcceptanceControllerTest {
 
         meterReadingSaved.get(0).setMeterReadingId(null);
         meterReadingSaved.get(0).getRead().get(0).setReadId(null);
+
+        meterReadingSaved.get(0).setRead(Arrays.asList(meterReadingSaved.get(0).getRead().toArray(new Read[0])));
 
         assertThat(meterReadingSaved.get(0).equals(meterReading), is(true));
         assertThat(meterReadingSaved.get(0).getRead().equals(meterReading.getRead()), is(true));
