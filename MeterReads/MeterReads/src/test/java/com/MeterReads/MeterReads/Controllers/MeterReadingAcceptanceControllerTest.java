@@ -4,9 +4,6 @@ import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 import com.MeterReads.MeterReads.MeterReadsApplication;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matchers;
-import org.hibernate.collection.internal.PersistentBag;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +21,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,8 +28,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.spy;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -77,32 +73,15 @@ public class MeterReadingAcceptanceControllerTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void meterRead_ValidInputs_PostAndSaveReturnCorrectly() throws Exception {
+        meterRead("customerId", 1, 2,"2017-11-20T16:19:48+00:00Z", "type", 3, 4);
+    }
 
-        String customerId = "customerId";
-        long serialNumber = 1;
-        long mpxn = 2;
-        String readDate = "2017-11-20T16:19:48+00:00Z";
+    public void meterRead(String customerId, long serialNumber, long mpxn, String readDate, String type, long registerId, long value) throws Exception {
 
-        String type = "type";
-        long registerId = 3;
-        long value = 4;
+        MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDate, type, registerId, value);
 
-        MeterReading meterReading = new MeterReading();
-        Read read = new Read();
-
-        meterReading.setCustomerId(customerId);
-        meterReading.setSerialNumber(serialNumber);
-        meterReading.setMpxn(mpxn);
-        meterReading.setReadDate("2017-11-20T16:19:48+00:00Z");
-
-        read.setType(type);
-        read.setRegisterId(registerId);
-        read.setValue(value);
-
-        meterReading.setRead(new ArrayList<>(Collections.singletonList(read)));
-
-        MvcResult mvcResult = mockMvc.perform(post("/meter-read")
+        mockMvc.perform(post("/meter-read")
                 .contentType(contentType)
                 .content(this.json(meterReading)))
                 .andDo(print()).andExpect(status().isCreated())
@@ -111,11 +90,11 @@ public class MeterReadingAcceptanceControllerTest {
                 .andExpect(jsonPath("$.mpxn", is(new Long(meterReading.getMpxn()).intValue())))
                 .andExpect(jsonPath("$.readDate", is(meterReading.getReadDate())))
                 .andExpect(jsonPath("$.read", hasSize(1)))
-                .andExpect(jsonPath("$.read[0].type", is(read.getType())))
-                .andExpect(jsonPath("$.read[0].registerId", is(new Long(read.getRegisterId()).intValue())))
-                .andExpect(jsonPath("$.read[0].value", is(new Long(read.getValue()).intValue())))
-                .andReturn();
-        
+                .andExpect(jsonPath("$.read[0].type", is(meterReading.getRead().get(0).getType())))
+                .andExpect(jsonPath("$.read[0].registerId", is(new Long(meterReading.getRead().get(0).getRegisterId()).intValue())))
+                .andExpect(jsonPath("$.read[0].value", is(new Long(meterReading.getRead().get(0).getValue()).intValue())))
+        ;
+
         List<MeterReading> meterReadingSaved = meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(
                 customerId,
                 serialNumber,
@@ -123,19 +102,54 @@ public class MeterReadingAcceptanceControllerTest {
                 readDate
         );
 
-        assertThat(meterReadingSaved.size(), is(1));
-        assertThat(meterReadingSaved.get(0).getRead().size(), is(1));
+        assertMeterReadingsEqual(meterReading, meterReadingSaved);
 
-        meterReading.setMeterReadingId(null);
-        meterReading.getRead().get(0).setReadId(null);
+    }
 
-        meterReadingSaved.get(0).setMeterReadingId(null);
-        meterReadingSaved.get(0).getRead().get(0).setReadId(null);
+    /*
+    Utilities
+     */
 
-        meterReadingSaved.get(0).setRead(Arrays.asList(meterReadingSaved.get(0).getRead().toArray(new Read[0])));
+    private MeterReading createMeterReading(String customerId, long serialNumber, long mpxn, String readDate, String type, long registerId, long value) {
 
-        assertThat(meterReadingSaved.get(0).equals(meterReading), is(true));
-        assertThat(meterReadingSaved.get(0).getRead().equals(meterReading.getRead()), is(true));
+        MeterReading meterReading = new MeterReading();
+        Read read = new Read();
+
+        meterReading.setCustomerId(customerId);
+        meterReading.setSerialNumber(serialNumber);
+        meterReading.setMpxn(mpxn);
+        meterReading.setReadDate(readDate);
+
+        read.setType(type);
+        read.setRegisterId(registerId);
+        read.setValue(value);
+
+        meterReading.setRead(new ArrayList<>(Collections.singletonList(read)));
+
+        return meterReading;
+
+    }
+
+    private void alterMeterReadsForComparison(MeterReading createdMeterReading, MeterReading savedMeterReading) {
+
+        createdMeterReading.setMeterReadingId(null);
+        createdMeterReading.getRead().get(0).setReadId(null);
+
+        savedMeterReading.setMeterReadingId(null);
+        savedMeterReading.getRead().get(0).setReadId(null);
+
+        savedMeterReading.setRead(Arrays.asList(savedMeterReading.getRead().toArray(new Read[0])));
+
+    }
+
+    private void assertMeterReadingsEqual(MeterReading createdMeterReading, List<MeterReading> savedMeterReadings) {
+
+        assertThat(savedMeterReadings.size(), is(1));
+        assertThat(savedMeterReadings.get(0).getRead().size(), is(1));
+
+        alterMeterReadsForComparison(createdMeterReading, savedMeterReadings.get(0));
+
+        assertThat(savedMeterReadings.get(0).equals(createdMeterReading), is(true));
 
     }
 
