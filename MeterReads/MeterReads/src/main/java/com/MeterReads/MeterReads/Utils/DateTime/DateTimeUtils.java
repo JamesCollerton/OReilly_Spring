@@ -2,11 +2,15 @@ package com.MeterReads.MeterReads.Utils.DateTime;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 
 /**
  * This is a utilities class used for all date/ time operations
  */
 public class DateTimeUtils {
+
+    public static final String COULD_NOT_PARSE_DATE = "Could not parse read date, incorrect format.";
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXXVV");
 
@@ -18,8 +22,12 @@ public class DateTimeUtils {
      *
      * @return The parsed datetime.
      */
-    public static OffsetDateTime parseISO8601Date(String dateString) {
-        return OffsetDateTime.parse(dateString, FORMATTER);
+    public static OffsetDateTime parseISO8601Date(String dateString) throws MeterReadsException {
+        try {
+            return OffsetDateTime.parse(dateString, FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new MeterReadsException(COULD_NOT_PARSE_DATE, e);
+        }
     }
 
 }

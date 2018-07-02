@@ -45,7 +45,7 @@ public class MeterReadingPresentationControllerTest {
 
     @Test
     public void meterRead_ValidRequestNoData_ExecutesReturnsNoData() throws Exception {
-        mockMvc.perform(get("/meter-read/meter-reads")
+        mockMvc.perform(get(MeterReadingPresentationController.URI)
                     .param("customerId", "customerId")
                     .param("serialNumber", "1")
                 )
@@ -71,7 +71,7 @@ public class MeterReadingPresentationControllerTest {
 
         MeterReading savedMeterReading = meterReadingRepository.save(meterReading);
 
-        mockMvc.perform(get("/meter-read/meter-reads")
+        mockMvc.perform(get(MeterReadingPresentationController.URI)
                     .param("customerId", customerId)
                     .param("serialNumber", Long.toString(serialNumber))
                 )

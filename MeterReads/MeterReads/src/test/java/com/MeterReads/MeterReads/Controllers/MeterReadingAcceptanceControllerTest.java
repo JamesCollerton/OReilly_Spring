@@ -81,7 +81,7 @@ public class MeterReadingAcceptanceControllerTest {
 
         MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDate, type, registerId, value);
 
-        mockMvc.perform(post("/meter-read")
+        mockMvc.perform(post(MeterReadingAcceptanceController.URI)
                 .contentType(contentType)
                 .content(this.json(meterReading)))
                 .andDo(print()).andExpect(status().isCreated())

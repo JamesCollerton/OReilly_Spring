@@ -69,9 +69,8 @@ import springfox.documentation.spring.web.plugins.Docket;
  * supply point.
  *
  * TODO: Make sure customer Id, serial number, mpxn is always unique and registerId is unique within that mpxn
- * TODO: Check that all URIs are correctly formed
- * TODO: Check that GET, PUT etc. don't work
- * TODO: Finish testing
+ * TODO: Change MeterReading back so that it stores an OffsetDateTime
+ * TODO: Finish testing (Meter Reading Presentation Controller)
  * TODO: Write all comments for testing and generate documentation
  */
 

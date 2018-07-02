@@ -2,6 +2,7 @@ package com.MeterReads.MeterReads.Controllers;
 
 import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Entities.Read;
+import com.MeterReads.MeterReads.Services.Entities.MeterReadingService;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RestController
 public class MeterReadingAcceptanceController {
 
+    protected static final String URI = "/meter-read";
+
     @Autowired
     private MeterReadingRepository meterReadingRepository;
 
@@ -39,10 +42,11 @@ public class MeterReadingAcceptanceController {
             notes = "New meter reading must be a valid JSON in body of request",
             response = ResponseEntity.class
     )
-    @RequestMapping(value = "/meter-read", method = POST)
+    @RequestMapping(value = URI, method = POST)
     public ResponseEntity<MeterReading> meterRead(@RequestBody MeterReading meterReading) {
+        MeterReadingService meterReadingService = new MeterReadingService(meterReading);
+        meterReadingService.validate();
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
-        // TODO: Should there be an exception catch here?
         return new ResponseEntity<>(meterReadingSaved, HttpStatus.CREATED);
     }
 

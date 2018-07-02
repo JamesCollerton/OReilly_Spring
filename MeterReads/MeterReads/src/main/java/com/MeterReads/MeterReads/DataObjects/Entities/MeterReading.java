@@ -1,6 +1,7 @@
 package com.MeterReads.MeterReads.DataObjects.Entities;
 
 import com.MeterReads.MeterReads.Utils.DateTime.DateTimeUtils;
+import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -72,7 +73,7 @@ public class MeterReading {
     }
 
     /*
-        Utilities
+     Utilities
      */
 
     /**
@@ -82,7 +83,7 @@ public class MeterReading {
      * @return The offset date time of the string
      */
     @JsonIgnore
-    public OffsetDateTime getReadDateAsOffsetDateTime() {
+    public OffsetDateTime getReadDateAsOffsetDateTime() throws MeterReadsException {
         return DateTimeUtils.parseISO8601Date(this.readDate);
     }
 

@@ -26,6 +26,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class MeterReadingPresentationController {
 
+    protected static final String URI = "/meter-read";
+
     @Autowired
     MeterReadingRepository meterReadingRepository;
 
@@ -43,13 +45,13 @@ public class MeterReadingPresentationController {
             notes = "Meter reading will be returned as JSON",
             response = ResponseEntity.class
     )
-    @RequestMapping(value = "/meter-read/meter-reads", method = GET)
+    @RequestMapping(value = URI, method = GET)
     public ResponseEntity meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "serialNumber") String serialNumber) {
         try {
             List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, StringParser.parseLong(serialNumber));
             return new ResponseEntity<>(meterReadings, HttpStatus.OK);
         } catch (MeterReadsException e) {
-            return new ResponseEntity<>(e.getMessage().toString(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
