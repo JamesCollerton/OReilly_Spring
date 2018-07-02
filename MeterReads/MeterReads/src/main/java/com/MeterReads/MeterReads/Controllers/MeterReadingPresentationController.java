@@ -44,13 +44,12 @@ public class MeterReadingPresentationController {
             response = ResponseEntity.class
     )
     @RequestMapping(value = "/meter-read/meter-reads", method = GET)
-    public ResponseEntity<List<MeterReading>> meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "serialNumber") String serialNumber) {
+    public ResponseEntity meterRead(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "serialNumber") String serialNumber) {
         try {
             List<MeterReading> meterReadings = meterReadingRepository.findByCustomerIdAndSerialNumber(customerId, StringParser.parseLong(serialNumber));
             return new ResponseEntity<>(meterReadings, HttpStatus.OK);
         } catch (MeterReadsException e) {
-            // TODO: What should we return here?
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage().toString(), HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -68,8 +68,11 @@ import springfox.documentation.spring.web.plugins.Docket;
  * MPXN this is the meter point number: MPAN for Electric, MPRN for Gas. This can be used to uniquely identify a
  * supply point.
  *
+ * TODO: Make sure customer Id, serial number, mpxn is always unique and registerId is unique within that mpxn
+ * TODO: Check that all URIs are correctly formed
+ * TODO: Check that GET, PUT etc. don't work
  * TODO: Finish testing
- * TODO: Write all comments and generate documentation
+ * TODO: Write all comments for testing and generate documentation
  */
 
 @Configuration

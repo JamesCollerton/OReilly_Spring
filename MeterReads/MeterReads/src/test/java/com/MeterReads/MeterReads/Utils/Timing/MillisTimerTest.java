@@ -33,4 +33,19 @@ public class MillisTimerTest {
         millisTimer.finish();
     }
 
+    @Test
+    public void startFinishGetTime_GetTimeCalledBeforeStart_ThrowsException() throws MeterReadsException {
+        MeterReadsExceptionTestHelper.expectMessage(expectedException, MillisTimer.TIMER_NOT_USED_CORRECTLY);
+        MillisTimer millisTimer = new MillisTimer();
+        millisTimer.getTime();
+    }
+
+    @Test
+    public void startFinishGetTime_GetTimeCalledBeforeFinish_ThrowsException() throws MeterReadsException {
+        MeterReadsExceptionTestHelper.expectMessage(expectedException, MillisTimer.TIMER_NOT_USED_CORRECTLY);
+        MillisTimer millisTimer = new MillisTimer();
+        millisTimer.start();
+        millisTimer.getTime();
+    }
+
 }
