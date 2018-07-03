@@ -34,6 +34,11 @@ public class MeterReadingRepositoryTest {
         saveAndFindMeterReadingByCustomerIdAndSerialNumber("Customer Id", 1l, 1l, "2017-11-20T16:19:48+00:00Z", 1l, "Type", 1l);
     }
 
+    @Test
+    public void saveAndFindMeterReadingByCustomerIdOrSerialNumberOrMpxn_ValidCustomerIdAndSerialNumberAndMpxn_ReturnsCorrectly() {
+        saveAndFindMeterReadingByCustomerIdOrSerialNumberOrMpxn("Customer Id", 1l, 1l, "2017-11-20T16:19:48+00:00Z", 1l, "Type", 1l);
+    }
+
     /*
         Utilities
      */
@@ -67,6 +72,10 @@ public class MeterReadingRepositoryTest {
         saveAndFindMeterReading(customerId, serialNumber, mpxn, readDate, registerId, type, value, this::findByCustomerIdAndSerialNumber);
     }
 
+    private void saveAndFindMeterReadingByCustomerIdOrSerialNumberOrMpxn(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, long value) {
+        saveAndFindMeterReading(customerId, serialNumber, mpxn, readDate, registerId, type, value, this::findByCustomerIdOrSerialNumberOrMpxn);
+    }
+
     private void saveAndFindMeterReading(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value, FindByFunction findByFunction) {
 
         // Arrange
@@ -92,6 +101,10 @@ public class MeterReadingRepositoryTest {
     }
 
     private List<MeterReading> findByCustomerIdAndSerialNumberAndMpxnAndReadDate(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value) {
+        return meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(customerId, serialNumber, mpxn, readDate);
+    }
+
+    private List<MeterReading> findByCustomerIdOrSerialNumberOrMpxn(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value) {
         return meterReadingRepository.findByCustomerIdAndSerialNumberAndMpxnAndReadDate(customerId, serialNumber, mpxn, readDate);
     }
 

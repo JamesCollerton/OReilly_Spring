@@ -44,8 +44,8 @@ public class MeterReadingAcceptanceController {
     )
     @RequestMapping(value = URI, method = POST)
     public ResponseEntity<MeterReading> meterRead(@RequestBody MeterReading meterReading) {
-        MeterReadingService meterReadingService = new MeterReadingService(meterReading);
-        meterReadingService.validate();
+//        MeterReadingService meterReadingService = new MeterReadingService(meterReading);
+//        meterReadingService.validate();
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
         return new ResponseEntity<>(meterReadingSaved, HttpStatus.CREATED);
     }

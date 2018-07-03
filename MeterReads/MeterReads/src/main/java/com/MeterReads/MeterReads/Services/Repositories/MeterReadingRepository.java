@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface MeterReadingRepository extends CrudRepository<MeterReading, Long> {
 
+    List<MeterReading> findByCustomerIdOrSerialNumberOrMpxn(String customerId, long serialNumber, long mpxn);
+
     /**
      * This is a custom method so we can retrieve from the database using both
      * the customer Id and the serial number in combination.
