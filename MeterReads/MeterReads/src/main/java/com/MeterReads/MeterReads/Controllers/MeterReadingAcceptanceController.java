@@ -19,8 +19,14 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class MeterReadingAcceptanceController {
 
+    /**
+     * The URI where we will access the meter reading.
+     */
     protected static final String URI = "/meter-read";
 
+    /**
+     * The repository we will use to access data from the database.
+     */
     @Autowired
     private MeterReadingRepository meterReadingRepository;
 

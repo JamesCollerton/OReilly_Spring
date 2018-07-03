@@ -26,8 +26,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class MeterReadingPresentationController {
 
+    /**
+     * The URI where we will access the meter reading.
+     */
     protected static final String URI = "/meter-read";
 
+    /**
+     * The repository we will use to access data from the database.
+     */
     @Autowired
     MeterReadingRepository meterReadingRepository;
 

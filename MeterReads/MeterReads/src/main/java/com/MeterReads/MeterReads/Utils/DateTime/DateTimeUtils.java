@@ -30,4 +30,15 @@ public class DateTimeUtils {
         }
     }
 
+    /**
+     * A method used to convert the OffsetDateTime to a string formatted by the ISO8601 standard
+     *
+     * @param offsetDateTime The OffseetDateTime to format
+     *
+     * @return A string of ISO8601 standard formatted from the OffsetDateTime
+     */
+    public static String convertOffsetDateTimeToISO8601DateString(OffsetDateTime offsetDateTime) {
+        return offsetDateTime.format(FORMATTER);
+    }
+
 }

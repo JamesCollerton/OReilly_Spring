@@ -85,24 +85,4 @@ public class MeterReadingPresentationControllerTest {
 
     }
 
-    @Test
-    public void meterRead_ValidRequestDataNoReads_ExecutesReturnsCorrectData() {
-
-    }
-
-    @Test
-    public void meterRead_InvalidRequestNoCustomerId_ExecutesReturnsErrorCode() {
-
-    }
-
-    @Test
-    public void meterRead_InvalidRequestNoSerialNumber_ExecutesReturnsErrorCode() {
-
-    }
-
-    @Test
-    public void meterRead_InvalidRequestInvalidURI_ExecutesReturnsErrorCode() {
-
-    }
-
 }

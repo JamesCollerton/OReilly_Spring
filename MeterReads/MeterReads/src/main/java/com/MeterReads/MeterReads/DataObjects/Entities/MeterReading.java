@@ -61,6 +61,12 @@ public class MeterReading {
         this.meterReadingId = meterReadingId;
     }
 
+    /**
+     * When we set reads within this class we also need to set the parent meter reading as this
+     * meter reading.
+     *
+     * @param read
+     */
     public void setRead(List<Read> read) {
         for(Read individualRead: read) {
             individualRead.setMeterReading(this);
