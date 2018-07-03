@@ -1,18 +1,15 @@
 package com.MeterReads.MeterReads.Controllers;
 
-import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
-import com.MeterReads.MeterReads.DataObjects.Entities.Read;
-import com.MeterReads.MeterReads.Services.Entities.MeterReadingService;
-import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
-import io.swagger.annotations.ApiOperation;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
+import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * This is the controller for accepting new meter readings. It can be accessed via a POST request to the /meter-read
@@ -44,8 +41,6 @@ public class MeterReadingAcceptanceController {
     )
     @RequestMapping(value = URI, method = POST)
     public ResponseEntity<MeterReading> meterRead(@RequestBody MeterReading meterReading) {
-//        MeterReadingService meterReadingService = new MeterReadingService(meterReading);
-//        meterReadingService.validate();
         MeterReading meterReadingSaved = meterReadingRepository.save(meterReading);
         return new ResponseEntity<>(meterReadingSaved, HttpStatus.CREATED);
     }

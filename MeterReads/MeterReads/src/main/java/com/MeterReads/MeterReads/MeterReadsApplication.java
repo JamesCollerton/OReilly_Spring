@@ -68,7 +68,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  * MPXN this is the meter point number: MPAN for Electric, MPRN for Gas. This can be used to uniquely identify a
  * supply point.
  *
- * TODO: Make sure customer Id, serial number, mpxn is always unique and registerId is unique within that mpxn
+ * TODO: Make sure customer Id, serial number, mpxn is always unique and registerId is unique within that mpxn (remove)
  * TODO: Change MeterReading back so that it stores an OffsetDateTime
  * TODO: Finish testing (Meter Reading Presentation Controller)
  * TODO: Write all comments for testing and generate documentation
