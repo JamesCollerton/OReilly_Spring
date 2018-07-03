@@ -81,7 +81,7 @@ public class MeterReadingPresentationControllerTest {
                 .andExpect(jsonPath("$[0].customerId", is(savedMeterReading.getCustomerId())))
                 .andExpect(jsonPath("$[0].serialNumber", is(new Long(savedMeterReading.getSerialNumber()).intValue())))
                 .andExpect(jsonPath("$[0].read", hasSize(1)))
-                .andExpect(jsonPath("$[0].read[0].registerId", is(new Long(savedMeterReading.getSerialNumber()).intValue())));
+                .andExpect(jsonPath("$[0].read[0].registerId", is(new Long(savedMeterReading.getRead().get(0).getRegisterId()).intValue())));
 
     }
 

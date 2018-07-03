@@ -61,6 +61,13 @@ public class DateTimeUtilsTest {
         parseISO8601Date_Invalid(DateTimeUtils.COULD_NOT_PARSE_DATE, "2017-11-01T19:19:99+00:00Z");
     }
 
+    @Test
+    public void convertOffsetDateTimeToISO8601DateString_ValidDate_FormatsCorrectly() throws MeterReadsException {
+        String readDateString = "2017-11-20T16:19:48+00:00Z";
+        OffsetDateTime offsetDateTime = DateTimeUtils.parseISO8601Date(readDateString);
+        assertThat(DateTimeUtils.convertOffsetDateTimeToISO8601DateString(offsetDateTime), is(readDateString));
+    }
+
     /*
     Utilities
      */

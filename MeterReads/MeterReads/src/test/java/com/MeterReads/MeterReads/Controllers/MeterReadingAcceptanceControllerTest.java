@@ -4,6 +4,8 @@ import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 import com.MeterReads.MeterReads.MeterReadsApplication;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
+import com.MeterReads.MeterReads.Utils.DateTime.DateTimeUtils;
+import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,11 +75,11 @@ public class MeterReadingAcceptanceControllerTest {
     }
 
     @Test
-    public void meterRead_ValidInputs_PostAndSaveReturnCorrectly() throws Exception {
+    public void meterRead_ValidInputs_PostAndSaveReturnCorrectly() throws Exception, MeterReadsException {
         meterRead("customerId", 1, 2,"2017-11-20T16:19:48+00:00Z", "type", 3, 4);
     }
 
-    public void meterRead(String customerId, long serialNumber, long mpxn, String readDate, String type, long registerId, long value) throws Exception {
+    public void meterRead(String customerId, long serialNumber, long mpxn, String readDate, String type, long registerId, long value) throws Exception, MeterReadsException {
 
         MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDate, type, registerId, value);
 
@@ -99,7 +101,7 @@ public class MeterReadingAcceptanceControllerTest {
                 customerId,
                 serialNumber,
                 mpxn,
-                readDate
+                DateTimeUtils.parseISO8601Date(readDate)
         );
 
         assertMeterReadingsEqual(meterReading, meterReadingSaved);
@@ -110,7 +112,7 @@ public class MeterReadingAcceptanceControllerTest {
     Utilities
      */
 
-    private MeterReading createMeterReading(String customerId, long serialNumber, long mpxn, String readDate, String type, long registerId, long value) {
+    private MeterReading createMeterReading(String customerId, long serialNumber, long mpxn, String readDate, String type, long registerId, long value) throws MeterReadsException {
 
         MeterReading meterReading = new MeterReading();
         Read read = new Read();
