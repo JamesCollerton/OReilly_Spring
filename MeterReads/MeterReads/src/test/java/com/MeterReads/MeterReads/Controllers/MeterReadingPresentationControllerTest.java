@@ -56,10 +56,35 @@ public class MeterReadingPresentationControllerTest {
 
     @Test
     public void meterRead_ValidRequestData_ExecutesReturnsCorrectData() throws Exception, MeterReadsException {
+        meterRead("customerId", 1, 1);
+    }
 
-        String customerId = "customerId";
-        long serialNumber = 1;
-        long registerId = 1;
+    /*
+    Utilities
+     */
+
+    private void meterRead(String customerId, long serialNumber, long registerId) throws Exception, MeterReadsException {
+
+        MeterReading meterReading = createMeterReading(customerId, serialNumber, registerId);
+
+        MeterReading savedMeterReading = meterReadingRepository.save(meterReading);
+
+        mockMvc.perform(get(MeterReadingPresentationController.URI)
+                .param("customerId", customerId)
+                .param("serialNumber", Long.toString(serialNumber))
+        )
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].customerId", is(savedMeterReading.getCustomerId())))
+                .andExpect(jsonPath("$[0].serialNumber", is(new Long(savedMeterReading.getSerialNumber()).intValue())))
+                .andExpect(jsonPath("$[0].read", hasSize(1)))
+                .andExpect(jsonPath("$[0].read[0].registerId", is(new Long(savedMeterReading.getRead().get(0).getRegisterId()).intValue())));
+
+
+    }
+
+    private MeterReading createMeterReading(String customerId, long serialNumber, long registerId) throws Exception, MeterReadsException {
 
         MeterReading meterReading = new MeterReading();
         Read read = new Read();
@@ -71,19 +96,7 @@ public class MeterReadingPresentationControllerTest {
         meterReading.setReadDate("2017-11-20T16:19:48+00:00Z");
         meterReading.setRead(Collections.singletonList(read));
 
-        MeterReading savedMeterReading = meterReadingRepository.save(meterReading);
-
-        mockMvc.perform(get(MeterReadingPresentationController.URI)
-                    .param("customerId", customerId)
-                    .param("serialNumber", Long.toString(serialNumber))
-                )
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].customerId", is(savedMeterReading.getCustomerId())))
-                .andExpect(jsonPath("$[0].serialNumber", is(new Long(savedMeterReading.getSerialNumber()).intValue())))
-                .andExpect(jsonPath("$[0].read", hasSize(1)))
-                .andExpect(jsonPath("$[0].read[0].registerId", is(new Long(savedMeterReading.getRead().get(0).getRegisterId()).intValue())));
+        return meterReading;
 
     }
 
