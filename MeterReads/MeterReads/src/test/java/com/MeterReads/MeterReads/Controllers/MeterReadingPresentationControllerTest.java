@@ -4,6 +4,7 @@ import com.MeterReads.MeterReads.DataObjects.Entities.MeterReading;
 import com.MeterReads.MeterReads.DataObjects.Entities.Read;
 import com.MeterReads.MeterReads.MeterReadsApplication;
 import com.MeterReads.MeterReads.Services.Repositories.MeterReadingRepository;
+import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +55,7 @@ public class MeterReadingPresentationControllerTest {
     }
 
     @Test
-    public void meterRead_ValidRequestData_ExecutesReturnsCorrectData() throws Exception {
+    public void meterRead_ValidRequestData_ExecutesReturnsCorrectData() throws Exception, MeterReadsException {
 
         String customerId = "customerId";
         long serialNumber = 1;
@@ -67,6 +68,7 @@ public class MeterReadingPresentationControllerTest {
 
         meterReading.setCustomerId(customerId);
         meterReading.setSerialNumber(serialNumber);
+        meterReading.setReadDate("2017-11-20T16:19:48+00:00Z");
         meterReading.setRead(Collections.singletonList(read));
 
         MeterReading savedMeterReading = meterReadingRepository.save(meterReading);

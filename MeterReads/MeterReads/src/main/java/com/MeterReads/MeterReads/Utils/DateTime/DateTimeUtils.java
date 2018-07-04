@@ -38,7 +38,7 @@ public class DateTimeUtils {
      * @return A string of ISO8601 standard formatted from the OffsetDateTime
      */
     public static String convertOffsetDateTimeToISO8601DateString(OffsetDateTime offsetDateTime) {
-        return offsetDateTime == null ? "" : offsetDateTime.toString();
+        return offsetDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssxxx'Z'"));
     }
 
 }
