@@ -68,6 +68,13 @@ public class DateTimeUtilsTest {
         assertThat(DateTimeUtils.convertOffsetDateTimeToISO8601DateString(offsetDateTime), is(readDateString));
     }
 
+    @Test
+    public void convertOffsetDateTimeToISO8601DateString_OffsetDate_FormatsCorrectly() throws MeterReadsException {
+        String readDateString = "2017-11-20T16:19:48+01:00Z";
+        OffsetDateTime offsetDateTime = DateTimeUtils.parseISO8601Date(readDateString);
+        assertThat(DateTimeUtils.convertOffsetDateTimeToISO8601DateString(offsetDateTime), is(readDateString));
+    }
+
     /*
     Utilities
      */

@@ -68,7 +68,6 @@ import springfox.documentation.spring.web.plugins.Docket;
  * MPXN this is the meter point number: MPAN for Electric, MPRN for Gas. This can be used to uniquely identify a
  * supply point.
  *
- * TODO: Testing for converting OffsetDatetime to a string
  * TODO: Write all comments for testing
  */
 
