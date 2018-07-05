@@ -7,9 +7,22 @@ import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
  */
 public class MillisTimer {
 
-    public static final String TIMER_FINISHED_BEFORE_STARTED = "Timer finish before timer started";
-    public static final String TIMER_NOT_USED_CORRECTLY = "Timer must be started and finished before time can be retrieved.";
+    /**
+     * Exception message returned if the timer finish method is called before it
+     * is started.
+     */
+    protected static final String TIMER_FINISHED_BEFORE_STARTED = "Timer finish before timer started";
 
+    /**
+     * Exception message returned if the timer is not finished or started before
+     * the get time is called.
+     */
+    protected static final String TIMER_NOT_USED_CORRECTLY = "Timer must be started and finished before time can be retrieved.";
+
+    /**
+     * We can use this to see if the timer has been started as current millis can
+     * never be zero.
+     */
     private static final long DEFAULT_LONG_TIME = 0;
 
     private long startTime;
