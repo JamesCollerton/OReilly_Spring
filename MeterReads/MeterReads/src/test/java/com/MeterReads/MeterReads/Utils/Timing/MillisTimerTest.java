@@ -8,6 +8,12 @@ import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertTrue;
 
+/**
+ * This contains all of the tests for the millis timer class, including making
+ * sure it is used properly and exhibits the correct behaviour.
+ *
+ * @see MillisTimer
+ */
 public class MillisTimerTest {
 
     @Rule

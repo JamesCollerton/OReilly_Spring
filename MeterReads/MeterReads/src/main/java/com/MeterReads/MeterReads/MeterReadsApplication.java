@@ -11,8 +11,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * This is the main body of the application and the API can be started from here.
- *
- * TODO: Write all comments for testing
  */
 
 @Configuration

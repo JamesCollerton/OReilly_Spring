@@ -18,6 +18,12 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * This is used to test the MeterReading repository saves and finds data as
+ * expected.
+ *
+ * @see MeterReadingRepository
+ */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class MeterReadingRepositoryTest {
@@ -39,6 +45,21 @@ public class MeterReadingRepositoryTest {
         Utilities
      */
 
+    /**
+     * This is a function that creates a meter reading with the supplied information.
+     *
+     * @param customerId The customer Id we want to insert in the meter reading.
+     * @param serialNumber The serial number we want to insert in the meter reading.
+     * @param mpxn The mpxn we want to insert in the meter reading.
+     * @param readDate The read date we want to insert in the meter reading.
+     * @param registerId The register Id we want to insert in the meter reading.
+     * @param type The type we want to insert in the meter reading.
+     * @param value The value we want to insert in the meter reading.
+     *
+     * @return A newly created MeterReading
+     *
+     * @throws MeterReadsException This is thrown if we cannot parse the read date.
+     */
     public MeterReading createMeterReading(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value) throws MeterReadsException {
 
         MeterReading meterReading = new MeterReading();
@@ -68,6 +89,22 @@ public class MeterReadingRepositoryTest {
         saveAndFindMeterReading(customerId, serialNumber, mpxn, readDate, registerId, type, value, this::findByCustomerIdAndSerialNumber);
     }
 
+    /**
+     * This function is used to save and then find a meter reading according to a
+     * set of parameters which cover what we want to save in the meter reading as
+     * well as the find by function we want to execute.
+     *
+     * @param customerId The customer Id we want to insert in the meter reading.
+     * @param serialNumber The serial number we want to insert in the meter reading.
+     * @param mpxn The mpxn we want to insert in the meter reading.
+     * @param readDate The read date we want to insert in the meter reading.
+     * @param registerId The register Id we want to insert in the meter reading.
+     * @param type The type we want to insert in the meter reading.
+     * @param value The value we want to insert in the meter reading.
+     * @param findByFunction The find function we want to execute to retrieve a result.
+     *
+     * @throws MeterReadsException
+     */
     private void saveAndFindMeterReading(String customerId, long serialNumber, long mpxn, String readDate, long registerId, String type, Long value, FindByFunction findByFunction) throws MeterReadsException {
 
         // Arrange
@@ -83,6 +120,10 @@ public class MeterReadingRepositoryTest {
         assertThat(savedReading.get(0).getRead().equals(meterReadingSaved.getRead()), is(true));
     }
 
+    /**
+     * This defines a functional interface that can be used to execute the different
+     * find by functions in the repository.
+     */
     @FunctionalInterface
     private interface FindByFunction {
         List<MeterReading> apply(String customerId, long serialNumber, long mpxn, OffsetDateTime readDate, long registerId, String type, Long value);

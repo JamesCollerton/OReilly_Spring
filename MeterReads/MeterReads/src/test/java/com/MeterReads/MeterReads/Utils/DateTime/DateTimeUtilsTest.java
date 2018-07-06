@@ -1,16 +1,21 @@
 package com.MeterReads.MeterReads.Utils.DateTime;
 
+import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
+import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsExceptionTestHelper;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeParseException;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
 
+/**
+ * This is used to test all of the DateTimeUtils
+ *
+ * @see DateTimeUtils
+ */
 public class DateTimeUtilsTest {
 
     @Rule
@@ -83,12 +88,11 @@ public class DateTimeUtilsTest {
      * Utility method for running tests when we expect the date to be invalid and to throw an
      * exception.
      *
-     * @param exceptionMessage
-     * @param dateString
+     * @param exceptionMessage The exception message we expect to have displayed.
+     * @param dateString The string we are trying to parse into a date.
      */
     private void parseISO8601Date_Invalid(String exceptionMessage, String dateString) throws MeterReadsException {
-        expectedException.expect(MeterReadsException.class);
-        expectedException.expectMessage(exceptionMessage);
+        MeterReadsExceptionTestHelper.expectMessage(expectedException, exceptionMessage);
         DateTimeUtils.parseISO8601Date(dateString);
     }
 
