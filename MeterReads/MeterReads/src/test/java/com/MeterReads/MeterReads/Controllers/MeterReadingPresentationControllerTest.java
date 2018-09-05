@@ -24,6 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+/**
+ * This class is used to test the MeterReadingPresentationController.
+ *
+ * @see MeterReadingPresentationController
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MeterReadsApplication.class)
 @WebAppConfiguration
@@ -63,6 +68,17 @@ public class MeterReadingPresentationControllerTest {
     Utilities
      */
 
+    /**
+     * This creates a meter read, saves it to the database and then forms a get request
+     * to the URI to make sure that what is returned is what we saved to the database.
+     *
+     * @param customerId The customer Id of the meter reading to save.
+     * @param serialNumber The serial number of the meter reading to save.
+     * @param registerId The register Id of the meter reading to save.
+     *
+     * @throws Exception From the post request
+     * @throws MeterReadsException When we try and parse the date string
+     */
     private void meterRead(String customerId, long serialNumber, long registerId) throws Exception, MeterReadsException {
 
         MeterReading meterReading = createMeterReading(customerId, serialNumber, registerId);
@@ -84,6 +100,18 @@ public class MeterReadingPresentationControllerTest {
 
     }
 
+    /**
+     * This is used to create a meter reading from the supplied information
+     *
+     * @param customerId The customer Id of the meter reading to save.
+     * @param serialNumber The serial number of the meter reading to save.
+     * @param registerId The register Id of the meter reading to save.
+     *
+     * @return A newly created meter reading with the supplied information.
+     *
+     * @throws Exception From the post request
+     * @throws MeterReadsException When we try and parse the date string
+     */
     private MeterReading createMeterReading(String customerId, long serialNumber, long registerId) throws Exception, MeterReadsException {
 
         MeterReading meterReading = new MeterReading();

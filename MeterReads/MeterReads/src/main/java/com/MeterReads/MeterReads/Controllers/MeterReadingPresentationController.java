@@ -35,7 +35,7 @@ public class MeterReadingPresentationController {
      * The repository we will use to access data from the database.
      */
     @Autowired
-    MeterReadingRepository meterReadingRepository;
+    private MeterReadingRepository meterReadingRepository;
 
     /**
      * This is the method for handling GET requests to the /meter-read URI.

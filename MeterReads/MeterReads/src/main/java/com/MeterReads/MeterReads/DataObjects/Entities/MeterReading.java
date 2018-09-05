@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * This object maps to the below schema and is used for ingesting
- * JSON from requests to the API.
+ * JSON from requests to the API and saving them to the database.
  *
  * {
  *    "customerId": "identifier123",
@@ -30,7 +30,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(exclude = "meterReadingId")
 @Entity
-@Table(name = "meter_reading")
+@Table(name = "METER_READINGS")
 public class MeterReading {
 
     @Id
@@ -65,7 +65,7 @@ public class MeterReading {
      * When we set reads within this class we also need to set the parent meter reading as this
      * meter reading.
      *
-     * @param read
+     * @param read The list of readings we are setting
      */
     public void setRead(List<Read> read) {
         for(Read individualRead: read) {
@@ -74,27 +74,27 @@ public class MeterReading {
         this.read = read;
     }
 
+    /**
+     * When we set the readDate we need to parse from a string provided in the JSON to an
+     * OffsetDateTime we can use in the rest of the program.
+     *
+     * @param readDate A string of the date we would like to parse
+     *
+     * @throws MeterReadsException If we cannot parse the string to an OffsetDateTime
+     */
     public void setReadDate(String readDate) throws MeterReadsException {
         this.readDate = DateTimeUtils.parseISO8601Date(readDate);
     }
 
+    /**
+     * When we return the read date to be used as part of the JSON we want to
+     * convert it from an OffsetDateTime to a string that can be used in the
+     * rest of the program.
+     *
+     * @return A string of the read date, correctly formatted.
+     */
     public String getReadDate() {
         return DateTimeUtils.convertOffsetDateTimeToISO8601DateString(readDate);
     }
-
-    /*
-     Utilities
-     */
-
-    /**
-     * This is used if we want to return the readDate not as a string but
-     * as an OffsetDateTime we can use in the program.
-     *
-     * @return The offset date time of the string
-     */
-//    @JsonIgnore
-//    public OffsetDateTime getReadDateAsOffsetDateTime() throws MeterReadsException {
-//        return DateTimeUtils.parseISO8601Date(this.readDate);
-//    }
 
 }

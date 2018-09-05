@@ -18,7 +18,6 @@ import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
@@ -38,11 +37,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+/**
+ * This class is used to test the MeterReadingAcceptanceController.
+ *
+ * @see MeterReadingAcceptanceController
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MeterReadsApplication.class)
 @WebAppConfiguration
 public class MeterReadingAcceptanceControllerTest {
 
+    /**
+     * Content Type as we will be sending a JSON to the post request.
+     */
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
@@ -57,6 +64,16 @@ public class MeterReadingAcceptanceControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    /*
+        Set Up
+     */
+
+    /**
+     * This is used to find the necessary converter so we can convert
+     * from a Java Jackson object to a JSON.
+     *
+     * @param converters A list of converters
+     */
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
 
@@ -74,11 +91,35 @@ public class MeterReadingAcceptanceControllerTest {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
     }
 
+    /*
+        Tests
+     */
+
     @Test
     public void meterRead_ValidInputs_PostAndSaveReturnCorrectly() throws Exception, MeterReadsException {
         meterRead("customerId", 1, 2,"2017-11-20T16:19:48+00:00Z", "type", 3, 4);
     }
 
+    /*
+        Utilities
+     */
+
+    /**
+     * This is an umbrella test for making sure that when you send a JSON to the meter reading
+     * acceptance controller it saves it correctly.
+     *
+     * @param customerId The customer Id of the meter reading
+     * @param serialNumber The serial number of the meter reading
+     * @param mpxn The mpxn of the meter reading
+     * @param readDate The read date of the meter reading
+     * @param type The type of the meter reading read
+     * @param registerId The register id of the meter reading read
+     * @param value The value of the meter reading read
+     *
+     * @throws Exception As part of the post
+     *
+     * @throws MeterReadsException As part of reading the date time string
+     */
     public void meterRead(String customerId, long serialNumber, long mpxn, String readDate, String type, long registerId, long value) throws Exception, MeterReadsException {
 
         MeterReading meterReading = createMeterReading(customerId, serialNumber, mpxn, readDate, type, registerId, value);
@@ -109,9 +150,24 @@ public class MeterReadingAcceptanceControllerTest {
     }
 
     /*
-    Utilities
+        Utilities
      */
 
+    /**
+     * This creates a new meter reading from all of the given inputs.
+     *
+     * @param customerId The customer Id of the meter reading
+     * @param serialNumber The serial number of the meter reading
+     * @param mpxn The mpxn of the meter reading
+     * @param readDate The read date of the meter reading
+     * @param type The type of the meter reading read
+     * @param registerId The register id of the meter reading read
+     * @param value The value of the meter reading read
+     *
+     * @return A brand new meter reading with these fields
+     *
+     * @throws MeterReadsException From the parsing of the read date string
+     */
     private MeterReading createMeterReading(String customerId, long serialNumber, long mpxn, String readDate, String type, long registerId, long value) throws MeterReadsException {
 
         MeterReading meterReading = new MeterReading();
@@ -132,6 +188,14 @@ public class MeterReadingAcceptanceControllerTest {
 
     }
 
+    /**
+     * We need to do this as one is incoming and has no Id and one has been saved to
+     * the database so has an Id. We also need to make sure the implementation of List
+     * they both use is comparable.
+     *
+     * @param createdMeterReading The meter reading we created.
+     * @param savedMeterReading The meter reading taken from the database.
+     */
     private void alterMeterReadsForComparison(MeterReading createdMeterReading, MeterReading savedMeterReading) {
 
         createdMeterReading.setMeterReadingId(null);
@@ -144,6 +208,13 @@ public class MeterReadingAcceptanceControllerTest {
 
     }
 
+    /**
+     * This is used to check we only have one database saved to the database and that
+     * it matches what we posted to the API
+     *
+     * @param createdMeterReading The meter reading we created.
+     * @param savedMeterReadings The meter readings taken from the database.
+     */
     private void assertMeterReadingsEqual(MeterReading createdMeterReading, List<MeterReading> savedMeterReadings) {
 
         assertThat(savedMeterReadings.size(), is(1));
@@ -155,11 +226,22 @@ public class MeterReadingAcceptanceControllerTest {
 
     }
 
+    /**
+     * This is a wrapper function for writing an object to JSON
+     *
+     * @param o The object to be written
+     *
+     * @return A JSON String of the object
+     *
+     * @throws IOException Thrown if we cannot write to JSON
+     */
     private String json(Object o) throws IOException {
+
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         this.mappingJackson2HttpMessageConverter.write(
                 o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
+
     }
 
 }

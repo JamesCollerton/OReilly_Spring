@@ -8,8 +8,13 @@ import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
  */
 public class StringParser {
 
-    public static final String EXCEPTION_PREFIX = "String ";
-    public static final String EXCEPTION_SUFFIX = " could not be parsed";
+    /**
+     * These two represent the strings we use to create an exception message
+     * to feed back. They are defined here so they can be used in tests to check
+     * the exception message is correct.
+     */
+    protected static final String EXCEPTION_PREFIX = "String ";
+    protected static final String EXCEPTION_SUFFIX = " could not be parsed";
 
     /**
      * This parses a string to a long

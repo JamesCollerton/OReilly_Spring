@@ -15,7 +15,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(exclude = {"readId", "meterReading"})
 @ToString(exclude = "meterReading")
 @Entity
-@Table(name = "read")
+@Table(name = "READS")
 public class Read {
 
     @Id

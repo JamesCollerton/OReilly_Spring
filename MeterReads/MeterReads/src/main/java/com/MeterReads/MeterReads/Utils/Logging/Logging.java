@@ -29,7 +29,7 @@ public class Logging {
      *
      * @return The return value for whatever method we are intercepting
      *
-     * @throws Throwable
+     * @throws Throwable Generic throwable from an AOP function
      */
     @Around("execution(* com.MeterReads.MeterReads..*.*(..))")
     public Object allMethodLogging(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -44,7 +44,7 @@ public class Logging {
      *
      * @return The return value for whatever method we are intercepting
      *
-     * @throws Throwable
+     * @throws Throwable Generic throwable from an AOP function
      */
     @Around("execution(* com.MeterReads.MeterReads.Controllers..*.*(..))")
     public Object controllerLogging(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -65,7 +65,7 @@ public class Logging {
      *
      * @return The return value for whatever method we are intercepting
      *
-     * @throws Throwable
+     * @throws Throwable Generic throwable from an AOP function
      */
     private Object loggingExecutor(String loggingName, ThrowableFunction<ProceedingJoinPoint, Object> loggerFunction, ProceedingJoinPoint joinPoint) throws Throwable {
         logger.info("Entering in " + loggingName + " Logging");
@@ -82,7 +82,7 @@ public class Logging {
      *
      * @return The return value for whatever method we are intercepting
      *
-     * @throws Throwable
+     * @throws Throwable Generic throwable from an AOP function
      */
     private Object genericMethodLogging(ProceedingJoinPoint joinPoint) throws Throwable {
         String methodName = joinPoint.getSignature().getName();
@@ -108,7 +108,7 @@ public class Logging {
      *
      * @return The return value for whatever method we are intercepting
      *
-     * @throws Throwable
+     * @throws Throwable Generic throwable from an AOP function
      */
     private Object performanceMonitoringLogging(ProceedingJoinPoint joinPoint) throws Throwable {
 

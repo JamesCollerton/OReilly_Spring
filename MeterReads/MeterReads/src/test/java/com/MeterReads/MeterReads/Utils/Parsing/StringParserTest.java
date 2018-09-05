@@ -6,6 +6,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+/**
+ * This contains all of the tests for parsing strings to various forms.
+ *
+ * @see StringParser
+ */
 public class StringParserTest {
 
     @Rule

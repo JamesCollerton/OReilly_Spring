@@ -10,9 +10,20 @@ import com.MeterReads.MeterReads.Utils.Exceptions.MeterReadsException;
  */
 public class DateTimeUtils {
 
-    public static final String COULD_NOT_PARSE_DATE = "Could not parse read date, incorrect format.";
+    /**
+     * Exception message thrown if we can't parse a date.
+     */
+    protected static final String COULD_NOT_PARSE_DATE = "Could not parse read date, incorrect format.";
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXXVV");
+    /**
+     * The formatter we use to parse incoming strings
+     */
+    private static final DateTimeFormatter PARSE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXXVV");
+
+    /**
+     * The formatter we use to format outgoing strings
+     */
+    private static final DateTimeFormatter TO_STRING_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssxxx'Z'");
 
     /**
      * A method used to parse ISO8601 date strings. It uses a custom formatter
@@ -24,7 +35,7 @@ public class DateTimeUtils {
      */
     public static OffsetDateTime parseISO8601Date(String dateString) throws MeterReadsException {
         try {
-            return OffsetDateTime.parse(dateString, FORMATTER);
+            return OffsetDateTime.parse(dateString, PARSE_FORMATTER);
         } catch (DateTimeParseException e) {
             throw new MeterReadsException(COULD_NOT_PARSE_DATE, e);
         }
@@ -38,7 +49,7 @@ public class DateTimeUtils {
      * @return A string of ISO8601 standard formatted from the OffsetDateTime
      */
     public static String convertOffsetDateTimeToISO8601DateString(OffsetDateTime offsetDateTime) {
-        return offsetDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssxxx'Z'"));
+        return offsetDateTime.format(TO_STRING_FORMATTER);
     }
 
 }
