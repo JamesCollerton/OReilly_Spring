@@ -26,6 +26,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/design")
 public class DesignController {
 
+    /**
+     * This is picked as it is mapped to the GET verb.
+     *
+     * @param model This is a Model object. We add attributes to the model object
+     *              which can then be retrieved by the Thymeleaf template in order
+     *              to populate the view template.
+     *
+     * @return
+     */
     @GetMapping
     public String showDesignForm(Model model) {
 
@@ -52,7 +61,10 @@ public class DesignController {
     }
 
     /**
-     * Not bothered to validate.
+     * This is picked as it is mapped to the POST verb
+     *
+     * This is fed back the design attribute populated above. It is populated using
+     * Thymeleaf and the form, then submitted to this function using the button.
      *
      * @param design
      * @return

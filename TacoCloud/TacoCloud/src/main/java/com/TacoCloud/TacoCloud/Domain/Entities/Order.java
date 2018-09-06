@@ -6,6 +6,10 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import lombok.Data;
 
+/**
+ * Note, this contains the Java validation annotations we can use in conjunction
+ * with Thymeleaf.
+ */
 @Data
 public class Order {
 
