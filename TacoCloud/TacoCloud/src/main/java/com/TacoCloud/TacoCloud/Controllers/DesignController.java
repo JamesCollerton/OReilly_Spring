@@ -3,8 +3,10 @@ package com.TacoCloud.TacoCloud.Controllers;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,14 +19,14 @@ import lombok.extern.slf4j.Slf4j;
  * Slf4j annotation generates a logger as if you had used the logger factory
  * for this class.
  *
- * private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DesignTacoController.class);
+ * private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DesignController.class);
  *
  * The RequestMapping prefix is then used to handle all requests beginning with "/design"
  */
 @Slf4j
 @Controller
 @RequestMapping("/design")
-public class DesignTacoController {
+public class DesignController {
 
     @GetMapping
     public String showDesignForm(Model model) {
@@ -51,8 +53,15 @@ public class DesignTacoController {
         return "design";
     }
 
+    /**
+     * Not bothered to validate.
+     *
+     * @param design
+     * @return
+     */
     @PostMapping
     public String processDesign(Taco design) {
+
         // Save the taco design...
         // We'll do this in chapter 3
         log.info("Processing design: " + design);
