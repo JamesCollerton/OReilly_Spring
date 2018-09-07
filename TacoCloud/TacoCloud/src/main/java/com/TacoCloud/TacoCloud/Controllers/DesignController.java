@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.TacoCloud.TacoCloud.Domain.Entities.Ingredient;
 import com.TacoCloud.TacoCloud.Domain.Entities.Ingredient.Type;
+import com.TacoCloud.TacoCloud.Domain.Entities.Order;
 import com.TacoCloud.TacoCloud.Domain.Entities.Taco;
 import com.TacoCloud.TacoCloud.Repositories.IngredientRepository;
+import com.TacoCloud.TacoCloud.Repositories.TacoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -31,6 +34,9 @@ public class DesignController {
 
     @Autowired
     private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private TacoRepository tacoRepository;
 
     /**
      * This is picked as it is mapped to the GET verb.
@@ -66,11 +72,16 @@ public class DesignController {
      * @return
      */
     @PostMapping
-    public String processDesign(Taco design) {
+    public String processDesign(
+            Taco design,
+            @ModelAttribute Order order
+    ) {
 
-        // Save the taco design...
-        // We'll do this in chapter 3
         log.info("Processing design: " + design);
+
+//        Taco saved = tacoRepository.save(design);
+//        order.addDesign(saved);
+
         return "redirect:/orders/current";
     }
 
