@@ -1,7 +1,11 @@
 package com.TacoCloud.TacoCloud.Domain.Entities;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +27,8 @@ public class Ingredient {
     public static enum Type {
         WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE;
     }
+
+    @ManyToMany(mappedBy = "ingredients")
+    private List<Taco> tacos;
 
 }

@@ -2,11 +2,16 @@ package com.TacoCloud.TacoCloud.Domain.Entities;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
@@ -28,8 +33,18 @@ public class Taco {
     @Size(min = 5, message = "Name must be at least 5 characters long")
     private String       name;
 
-    @ManyToMany(targetEntity = Ingredient.class)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "TACO_INGREDIENT",
+            joinColumns = @JoinColumn(name = "TACO_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "INGREDIENT_ID", referencedColumnName = "ID")
+    )
     @Size(min = 1, message = "You must choose at least 1 ingredient")
-    private List<String> ingredients;
+    private List<Ingredient> ingredients;
+
+    @PrePersist
+    void createdAt() {
+        this.createdAt = new Date();
+    }
 
 }
