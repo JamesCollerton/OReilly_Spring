@@ -1,6 +1,7 @@
 package com.TacoCloud.TacoCloud.Controllers;
 
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 import com.TacoCloud.TacoCloud.Domain.Entities.Order;
+import com.TacoCloud.TacoCloud.Repositories.OrderRepository;
 
 /**
  * This is the controller for the orders mapping.
@@ -17,6 +19,9 @@ import com.TacoCloud.TacoCloud.Domain.Entities.Order;
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     /**
      * Adds an attribute to the model and returns a view.
